@@ -1,0 +1,39 @@
+#include "ProgrammState.hpp"
+#include "LcdPrintFunctions.hpp"
+
+
+static bool output = false;
+
+void diodRoutine(){
+	digitalWrite(RELE_OUT, output);
+	output = !output;
+	diodTask.startTimer(1);
+}
+
+void timeRoutine(){
+	clock.incrementSecond();
+	clockTask.startTimer(1);
+}
+
+void displayRoutine(){
+	displayDateTime(clock);
+	displayTask.startTimer(1);
+	
+}
+
+void backlightRoutine(){
+	lcd.noBacklight();
+}
+
+void alarmRoutine(){
+	state = State::getAlarmState();
+}
+
+void disableAlarmRoutine(){
+	//state must be alarm otherwise won't work
+	//by logic it will be alarm, because when you entered
+	//alarm state you can only change it to default
+	//and when you changing you disable this routine
+	state->handleInput(ButtonEvent(0, 1000));
+	state = State::getDefaultState();
+}
