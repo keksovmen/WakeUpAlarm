@@ -23,8 +23,10 @@ void setup(void){
 	
 	Serial.begin(9600);
 	Serial.println("Starting");
+
 	
 	lcd.init();
+	initState();
 	initInputButtons();
 	initRealTimeTimer();
 	
@@ -58,12 +60,6 @@ void tasksLoop(uint8_t secondsPast){
 	for (int i = 0; i < TASK_VECTOR_SIZE; i++){
 		taskVector[i].consumeTime(secondsPast);
 	}
-	// diodTask.consumeTime(secondsPast);
-	// clockTask.consumeTime(secondsPast);
-	// displayTask.consumeTime(secondsPast);
-	// disableBackLightTask.consumeTime(secondsPast);
-	// alarmTask.consumeTime(secondsPast);
-	// disableAlarmTask.consumeTime(secondsPast);
 }
 
 // void wait(unsigned int ticksCount){

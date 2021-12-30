@@ -12,4 +12,10 @@ Task taskVector[TASK_VECTOR_SIZE] = {
 							};
 ButtonsControl<BUTTONS_COUNT> buttons;
 
-State* state = State::getDefaultState();
+State* state = nullptr;
+
+
+void initState(){
+	// lcd.init();
+	state = State::getDefaultState();
+}

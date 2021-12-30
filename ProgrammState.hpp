@@ -39,6 +39,8 @@ extern ButtonsControl<BUTTONS_COUNT> buttons;
 
 extern State* state;
 
+//init
+void initState();
 
 //routines 
 void diodRoutine();

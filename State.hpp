@@ -2,7 +2,6 @@
 #define STATE_H
 
 
-// #include "ProgrammState.hpp"
 #include "ButtonsControl.hpp"
 #include "Clock.hpp"
 
@@ -38,12 +37,15 @@ class InputState : public State{
 		void handleInput(const ButtonEvent& event) override;
 	
 	protected:
-		void validateCursorInput();
-		Time cursorInputToTime();
-		void lcdDisplayInput();
+		bool validateInput();
+		void incrementTimeAtCursor(int8_t change);
+		void lcdShowInput();
 		
 		int8_t cursorPosition = 0;
-		int8_t cursorInput[4] = {0, 0, 0, 0};
+		Time m_time;
+		// int8_t hours = 0;
+		// int8_t minutes = 0;
+		// int8_t seconds = 0;
 };
 
 class AlarmState : public State{

@@ -2,7 +2,6 @@
 
 #include "State.hpp"
 #include "LcdPrintFunctions.hpp"
-// #include "Clock.hpp"
 #include "ProgrammState.hpp"
 
 
@@ -24,6 +23,7 @@ State* State::getAlarmState(){
 
 //-----------------------DefaultState--------------------------
 DefaultState::DefaultState(){
+	lcd.cursor_off();
 	displayTask.startTimer(0);
 }
 
@@ -40,7 +40,6 @@ void DefaultState::handleInput(const ButtonEvent& event){
 				break;
 		}
 	}
-	// return this;
 }
 
 
@@ -51,18 +50,19 @@ InputState::InputState(){
 	displayTask.disable();
 	
 	lcd.clear();
-	lcdDisplayInput();
+	lcdShowInput();
 	lcd.cursor_on();
 }
 
 void InputState::handleInput(const ButtonEvent& event){
+	int8_t change = 0;
 	switch (event.buttonIndex){
 		case 0:
 			//set alarm
 			if (event.holdMs >= 1000){
 				
 				Clock result = Clock(clock);
-				result.setTime(cursorInputToTime());
+				result.setTime(m_time);
 				if (result <= clock){
 					result.incrementDay();
 				}
@@ -71,61 +71,69 @@ void InputState::handleInput(const ButtonEvent& event){
 				Serial.println(deltaSec);
 				alarmTask.startTimer(deltaSec);
 				disableAlarmTask.startTimer(deltaSec + 10);
-				lcd.cursor_off();
 				state =  new (stateStorage) DefaultState();
 			}else{
 				//up
-				cursorInput[cursorPosition]++;
+				change = cursorPosition % 2 == 0 ? 10 : 1;
 			}
 			break;
 		case 1:
 			//down
-			cursorInput[cursorPosition]--;
+			change = cursorPosition % 2 == 0 ? -10 : -1;
 			break;
 		case 2:
 			//left
 			cursorPosition--;
-			if (cursorPosition < 0){
-				cursorPosition = 0;
-			}
 			break;
 		case 3:
 			//right
 			cursorPosition++;
-			if (cursorPosition > 3){
-				cursorPosition = 3;
-			}
 			break;
 	}
-	validateCursorInput();
-	lcdDisplayInput();
-	
-	// return this;
-}
-
-void InputState::validateCursorInput(){
-	cursorInput[0] = zeroNegativeBoundaryGreater(cursorInput[0], 2);
-	if (cursorInput[0] == 2){
-		cursorInput[1] = zeroNegativeBoundaryGreater(cursorInput[1], 3);
-	}else{
-		cursorInput[1] = zeroNegativeBoundaryGreater(cursorInput[1], 9);
+	cursorPosition = cursorPosition < 0 ? 0 : 
+			(cursorPosition > 5 ? 5 : cursorPosition);
+	incrementTimeAtCursor(change);
+	if (!validateInput()){
+		incrementTimeAtCursor(-change);
 	}
-	cursorInput[2] = zeroNegativeBoundaryGreater(cursorInput[2], 5);
-	cursorInput[3] = zeroNegativeBoundaryGreater(cursorInput[3], 9);
+	lcdShowInput();
 }
 
-Time InputState::cursorInputToTime(){
-	return Time(0, 
-				cursorInput[2] * 10 + cursorInput[3],
-				cursorInput[0] * 10 + cursorInput[1]);
+bool InputState::validateInput(){
+	if (m_time.hours < 0 || m_time.minutes < 0 || m_time.seconds < 0){
+		return false;
+	}
+	if (m_time.hours > 23 || m_time.minutes > 59 || m_time.seconds > 59){
+		return false;
+	}
+	return true;
 }
 
-void InputState::lcdDisplayInput(){
+void InputState::incrementTimeAtCursor(int8_t change){
+	switch(cursorPosition){
+		case 0: case 1:
+			m_time.hours += change;
+			break;
+		case 2: case 3:
+			m_time.minutes += change;
+			break;
+		case 4: case 5:
+			m_time.seconds += change;
+			break;
+	}
+}
+
+void InputState::lcdShowInput(){
 	lcd.setCursor(0, 0);
-	displayTime(cursorInputToTime());
-	lcd.setCursor(
-		cursorPosition > 1 ? cursorPosition + 1 : cursorPosition,
-		0);
+	displayTime(m_time, true);
+	uint8_t cursorAt = cursorPosition;
+	if (cursorPosition > 1){
+		cursorAt++;
+	}
+	if (cursorPosition > 3){
+		cursorAt++;
+	}
+	lcd.setCursor(cursorAt, 0);
 }
 
 //----------------------AlarmState----------------------------
