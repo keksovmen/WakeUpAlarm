@@ -3,6 +3,7 @@
 #include <stdint.h>
 
 #define STARTING_YEAR 1970
+#define SECONDS_IN_DAY 86400L
 
 class Time{
 	public:
@@ -18,7 +19,8 @@ class Time{
 		
 		Time(int8_t seconds=0,
 				int8_t minutes=0,
-				int8_t hours=0) : seconds(seconds),
+				int8_t hours=0) : 
+					seconds(seconds),
 					minutes(minutes),
 					hours(hours){};
 		Time (const Time& d) = default;

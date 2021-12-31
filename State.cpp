@@ -13,6 +13,24 @@ int8_t zeroNegativeBoundaryGreater(int8_t val, int8_t boundary){
 }
 
 
+//---------------------------InputCallbacks--------------------
+void activateAlarm(const Time& t){
+	int32_t diff = t.diff(clock.getTime());
+	if (diff <= 0){
+		diff = abs(diff) + SECONDS_IN_DAY;
+	}
+	//DEBUG
+	Serial.println(diff);
+	
+	alarmTask.startTimer(diff);
+	disableAlarmTask.startTimer(diff + 30);
+	state =  new (stateStorage) DefaultState();
+}
+
+
+
+
+//--------------------------State------------------------------
 State* State::getDefaultState(){
 	return new(stateStorage) DefaultState();
 }
@@ -32,7 +50,7 @@ void DefaultState::handleInput(const ButtonEvent& event){
 	if (event.holdMs >= 1000){
 		switch(event.buttonIndex){
 			case 0:
-				state = new(stateStorage) InputState();
+				state = new(stateStorage) TimeInputState(activateAlarm);
 				break;
 			case 1:
 				lcd.backlight();
@@ -43,8 +61,10 @@ void DefaultState::handleInput(const ButtonEvent& event){
 }
 
 
-//-----------------------InputState----------------------------
-InputState::InputState(){
+//-----------------------TimeInputState----------------------------
+TimeInputState::TimeInputState(void (*consumer)(const Time& t))
+	: consumer(consumer)
+{
 	//read previous value from eeprom
 	
 	displayTask.disable();
@@ -54,28 +74,17 @@ InputState::InputState(){
 	lcd.cursor_on();
 }
 
-void InputState::handleInput(const ButtonEvent& event){
+void TimeInputState::handleInput(const ButtonEvent& event){
 	int8_t change = 0;
 	switch (event.buttonIndex){
 		case 0:
 			//set alarm
 			if (event.holdMs >= 1000){
-				
-				Clock result = Clock(clock);
-				result.setTime(m_time);
-				if (result <= clock){
-					result.incrementDay();
-				}
-
-				int32_t deltaSec = result.diff(clock);
-				Serial.println(deltaSec);
-				alarmTask.startTimer(deltaSec);
-				disableAlarmTask.startTimer(deltaSec + 10);
-				state =  new (stateStorage) DefaultState();
-			}else{
-				//up
-				change = cursorPosition % 2 == 0 ? 10 : 1;
+				consumer(m_time);
+				return;
 			}
+			//up
+			change = cursorPosition % 2 == 0 ? 10 : 1;
 			break;
 		case 1:
 			//down
@@ -99,7 +108,7 @@ void InputState::handleInput(const ButtonEvent& event){
 	lcdShowInput();
 }
 
-bool InputState::validateInput(){
+bool TimeInputState::validateInput(){
 	if (m_time.hours < 0 || m_time.minutes < 0 || m_time.seconds < 0){
 		return false;
 	}
@@ -109,7 +118,7 @@ bool InputState::validateInput(){
 	return true;
 }
 
-void InputState::incrementTimeAtCursor(int8_t change){
+void TimeInputState::incrementTimeAtCursor(int8_t change){
 	switch(cursorPosition){
 		case 0: case 1:
 			m_time.hours += change;
@@ -123,7 +132,7 @@ void InputState::incrementTimeAtCursor(int8_t change){
 	}
 }
 
-void InputState::lcdShowInput(){
+void TimeInputState::lcdShowInput(){
 	lcd.setCursor(0, 0);
 	displayTime(m_time, true);
 	uint8_t cursorAt = cursorPosition;

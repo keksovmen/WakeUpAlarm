@@ -130,7 +130,7 @@ void Date::addYear(){
 }
 
 int32_t Date::diff(const Date& d) const{
-	return (currentDay - d.currentDay) * 86400L;
+	return (currentDay - d.currentDay) * SECONDS_IN_DAY;
 }
 
 //-----------------------Clock-----------------------------

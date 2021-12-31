@@ -8,7 +8,7 @@
 
 class State;
 class DefaultState;
-class InputState;
+class TimeInputState;
 class AlarmState;
 
 
@@ -30,9 +30,9 @@ class DefaultState : public State{
 		void handleInput(const ButtonEvent& event) override;
 };
 
-class InputState : public State{
+class TimeInputState : public State{
 	public:
-		InputState();
+		TimeInputState(void (*consumer)(const Time& t));
 		
 		void handleInput(const ButtonEvent& event) override;
 	
@@ -41,11 +41,9 @@ class InputState : public State{
 		void incrementTimeAtCursor(int8_t change);
 		void lcdShowInput();
 		
+		void (*consumer)(const Time& t);
 		int8_t cursorPosition = 0;
 		Time m_time;
-		// int8_t hours = 0;
-		// int8_t minutes = 0;
-		// int8_t seconds = 0;
 };
 
 class AlarmState : public State{

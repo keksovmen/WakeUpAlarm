@@ -26,6 +26,9 @@ void setup(void){
 
 	
 	lcd.init();
+	//DEBUG
+	lcd.backlight();
+	
 	initState();
 	initInputButtons();
 	initRealTimeTimer();
