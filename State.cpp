@@ -60,8 +60,57 @@ void DefaultState::handleInput(const ButtonEvent& event){
 	}
 }
 
+//-------------------------InputState----------------------------
+template<typename T>
+InputState<T>::InputState(void (*consumer)(const T& val))
+	: consumer(consumer)
+{
+	displayTask.disable();
+	lcd.clear();
+	lcdShowInput();
+	lcd.cursor_on();
+}
 
-//-----------------------TimeInputState----------------------------
+template<typename T>
+void InputState<T>::handleInput(const ButtonEvent& event){
+	if (event.buttonIndex == 0 && event.holdMs >= 1000){
+		consumer(m_val);
+		return;
+	}
+	int16_t change = getChange(event);
+	moveCursor(event);
+	applyChange(change);
+	if (!validateInput()){
+		applyChange(-change);
+	}
+	lcdShowInput();
+}
+
+template<typename T>
+void InputState<T>::moveCursor(const ButtonEvent& event){
+	if (event.buttonIndex == 3){
+		//left
+		cursorPosition--;
+	}else if (event.buttonIndex == 4){
+		//right
+		cursorPosition++;
+	}
+	validateCursor();
+}
+
+template<typename T>
+void InputState<T>::validateCursor(){
+	if (cursorPosition < 0){
+		cursorPosition = 0;
+	}else if(cursorPosition > maxCursorPosition()){
+		cursorPosition = maxCursorPosition();
+	}
+	// cursorPosition = cursorPosition < 0 ? 0 : 
+			// (cursorPosition > 5 ? 5 : cursorPosition);
+}
+
+
+//-----------------------TimeInputState--------------------------
 TimeInputState::TimeInputState(void (*consumer)(const Time& t))
 	: consumer(consumer)
 {
@@ -144,6 +193,16 @@ void TimeInputState::lcdShowInput(){
 	}
 	lcd.setCursor(cursorAt, 0);
 }
+
+//----------------------DateInputState------------------------
+
+
+
+
+
+
+
+
 
 //----------------------AlarmState----------------------------
 AlarmState::AlarmState(){
