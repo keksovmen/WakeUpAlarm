@@ -3,7 +3,15 @@
 #include <stdint.h>
 
 #define STARTING_YEAR 1970
+#define MAX_YEAR 9999
 #define SECONDS_IN_DAY 86400L
+
+/**
+	@param month [1-12]
+**/
+
+int8_t daysInMonth(int8_t month, int16_t year);
+
 
 class Time{
 	public:
@@ -44,7 +52,7 @@ class Date{
 		/**
 			@param day - in range [0 - 31]
 			@param month - in range [1 - 12]
-			@param year - in range [STARTING_YEAR - 9999]
+			@param year - in range [STARTING_YEAR - MAX_YEAR]
 			@param currentDay - amount of days since STARTING_YEAR
 		**/
 		int8_t day;
@@ -55,8 +63,8 @@ class Date{
 		Date(int8_t day=1, 
 				int8_t month=1,
 				int16_t year=STARTING_YEAR);
-		Date (const Date& d) = default;
-		Date& operator= (const Date& d) = default;
+		Date (const Date& d);
+		// Date& operator= (const Date& d) = default;
 		// Date operator-(const Date& t) const;
 		
 		void addDay();
@@ -65,6 +73,7 @@ class Date{
 	private:
 		void addMonth();
 		void addYear();
+		void calculateCurrentDay();
 };
 
 

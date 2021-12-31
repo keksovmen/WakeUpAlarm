@@ -12,7 +12,7 @@ bool isLeapYear(int16_t year){
 
 
 /**
-	@param month [0 - 11]
+	@param month [1 - 12]
 **/
 
 int8_t daysInMonth(int8_t month, int16_t year){
@@ -28,8 +28,9 @@ int8_t daysInMonth(int8_t month, int16_t year){
 							31,		//October
 							30,		//November
 							31};		//December
-	if (month != 1){
-		return daysInMonth[month];
+	//February check
+	if (month != 2){
+		return daysInMonth[month - 1];
 	}
 	
 	if (isLeapYear(year)){
@@ -91,23 +92,20 @@ Date::Date(int8_t day,
 		int16_t year) : 
 	day(day), month(month), year(year)
 {
-	for (int i = STARTING_YEAR; i < year; i++){
-		if(isLeapYear(i)){
-			currentDay += 366;
-		}else{
-			currentDay += 365;
-		}
-	}
-	for (int i = 0; i < month - 1; i++){
-		currentDay += daysInMonth(i, year);
-	}
-	currentDay += day;
+	calculateCurrentDay();
+}
+
+Date::Date (const Date& d){
+	this->day = d.day;
+	this->month = d.month;
+	this->year = d.year;
+	calculateCurrentDay();
 }
 
 void Date::addDay(){
 	day++;
 	currentDay++;
-	if ((day - 1) >= daysInMonth(month - 1, year)){
+	if ((day - 1) >= daysInMonth(month, year)){
 		day = 1;
 		addMonth();
 	}
@@ -124,7 +122,7 @@ void Date::addMonth(){
 
 void Date::addYear(){
 	year++;
-	if (year > 9999){
+	if (year > MAX_YEAR){
 		year = STARTING_YEAR;
 	}
 }
@@ -132,6 +130,22 @@ void Date::addYear(){
 int32_t Date::diff(const Date& d) const{
 	return (currentDay - d.currentDay) * SECONDS_IN_DAY;
 }
+
+void Date::calculateCurrentDay(){
+	currentDay = 0;
+	for (int i = STARTING_YEAR; i < year; i++){
+		if(isLeapYear(i)){
+			currentDay += 366;
+		}else{
+			currentDay += 365;
+		}
+	}
+	for (int i = 1; i < month; i++){
+		currentDay += daysInMonth(i, year);
+	}
+	currentDay += day;
+}
+
 
 //-----------------------Clock-----------------------------
 
