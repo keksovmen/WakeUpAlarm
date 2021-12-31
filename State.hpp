@@ -8,6 +8,9 @@
 
 class State;
 class DefaultState;
+
+template<typename T>
+class InputState;
 class TimeInputState;
 class DateInputState;
 class AlarmState;
@@ -31,6 +34,7 @@ class DefaultState : public State{
 		void handleInput(const ButtonEvent& event) override;
 };
 
+
 template <typename T>
 class InputState : public State{
 	public:
@@ -39,35 +43,36 @@ class InputState : public State{
 	
 	protected:
 		T m_val;
+		int8_t cursorPosition = 0;
 		
-		int16_t getChange(const ButtonEvent& event) const = 0;
-		int8_t maxCursorPosition() const = 0;
-		void applyChange(int16_t change, int8_t cursorPosition) = 0;
-		bool validateInput() = 0;
-		void lcdShowInput() = 0;
+		virtual int16_t getChange(const ButtonEvent& event) const = 0;
+		virtual int8_t maxCursorPosition() const = 0;
+		virtual void applyChange(int16_t change, int8_t cursorPosition) = 0;
+		virtual bool validateInput() = 0;
+		//ideal to call in constructor but doesn't work
+		//https://stackoverflow.com/questions/962132/calling-virtual-functions-inside-constructors
+		//be sure to call in children constructor
+		virtual void lcdShowInput() const = 0;
 	
 	private:
-		int8_t cursorPosition = 0;
 		void (*consumer)(const T& val);
 		
 		void moveCursor(const ButtonEvent& event);
 		void validateCursor();
 };
 
-class TimeInputState : public State{
+class TimeInputState : public InputState<Time>{
 	public:
-		TimeInputState(void (*consumer)(const Time& t));
+		TimeInputState(void (*consumer)(const Time& val));
 		
-		void handleInput(const ButtonEvent& event) override;
+		// void handleInput(const ButtonEvent& event) override;
 	
 	protected:
-		bool validateInput();
-		void incrementTimeAtCursor(int8_t change);
-		void lcdShowInput();
-		
-		void (*consumer)(const Time& t);
-		int8_t cursorPosition = 0;
-		Time m_time;
+		int16_t getChange(const ButtonEvent& event) const override;
+		int8_t maxCursorPosition() const override;
+		void applyChange(int16_t change, int8_t cursorPosition) override;
+		bool validateInput() override;
+		void lcdShowInput() const override;
 };
 
 
@@ -93,7 +98,5 @@ class AlarmState : public State{
 		AlarmState();
 		void handleInput(const ButtonEvent& event) override;
 };
-
-
 
 #endif
