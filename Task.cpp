@@ -12,6 +12,10 @@ void Task::consumeTime(int32_t deltaTimeS){
 }
 
 void Task::startTimer(int32_t delayS){
-	remainingDelayS = delayS;
-	isActive = true;
+	if (delayS == 0){
+		activity();
+	}else{
+		remainingDelayS = delayS;
+		isActive = true;
+	}
 }
