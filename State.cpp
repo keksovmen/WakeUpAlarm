@@ -8,6 +8,12 @@
 static char stateStorage[13];
 
 
+//remember current lcd has 16 symbols on the line
+static const char* MENUS[3]={"Set alarm",
+						"Set time",
+						"Set date"};
+
+
 int8_t zeroNegativeBoundaryGreater(int8_t val, int8_t boundary){
 	return val > boundary ? boundary : (val < 0 ? 0 : val);
 }
@@ -34,6 +40,10 @@ void setDate(const Date& d){
 	state =  new (stateStorage) DefaultState();
 }
 
+void setTime(const Time& t){
+	clock.setTime(t);
+	state =  new (stateStorage) DefaultState();
+}
 
 //--------------------------State------------------------------
 State* State::getDefaultState(){
@@ -63,7 +73,7 @@ void DefaultState::handleInput(const ButtonEvent& event){
 				disableBackLightTask.startTimer(5);
 				break;
 			case 2:
-				state = new (stateStorage) DateInputState(setDate);
+				state = new (stateStorage) MenuInputState();
 				break;
 		}
 	}
@@ -73,7 +83,6 @@ void DefaultState::handleInput(const ButtonEvent& event){
 CursorInputState::CursorInputState(){
 	displayTask.disable();
 	lcd.clear();
-	lcd.cursor_on();
 }
 
 void CursorInputState::handleInput(const ButtonEvent& event){
@@ -101,6 +110,39 @@ void CursorInputState::validateCursor(){
 }
 
 
+//------------------------MenuInputState-------------------------
+MenuInputState::MenuInputState(){
+	lcdShowInput();
+}
+
+void MenuInputState::handleInput(const ButtonEvent& event){
+	CursorInputState::handleInput(event);
+	if (event.buttonIndex == 0){
+		//select
+		switch(cursorPosition){
+			case 0:
+				state = new(stateStorage) TimeInputState(activateAlarm);
+				return;
+			case 1:
+				state = new(stateStorage) TimeInputState(setTime, true);
+				return;
+			case 2:
+				state = new(stateStorage) DateInputState(setDate);
+				return;
+		}
+	}
+	lcdShowInput();
+}
+
+int8_t MenuInputState::maxCursorPosition() const {
+	return 2;
+}
+
+
+void MenuInputState::lcdShowInput() const {
+	lcd.clear();
+	lcd.print(MENUS[cursorPosition]);
+}
 
 
 
@@ -109,6 +151,7 @@ template<typename T>
 InputState<T>::InputState(void (*consumer)(const T& val))
 	: consumer(consumer)
 {
+	lcd.cursor_on();
 }
 
 template<typename T>
@@ -126,7 +169,6 @@ void InputState<T>::handleInput(const ButtonEvent& event){
 	}
 	lcdShowInput();
 }
-
 
 
 //-----------------------TimeInputState--------------------------

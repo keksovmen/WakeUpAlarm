@@ -8,6 +8,8 @@
 
 class State;
 class DefaultState;
+class CursorInputState;
+class MenuInputState;
 
 template<typename T>
 class InputState;
@@ -53,6 +55,16 @@ class CursorInputState : public State{
 		void validateCursor();
 		
 };
+
+class MenuInputState : public CursorInputState{
+	public:
+		MenuInputState();
+		void handleInput(const ButtonEvent& event) override;
+	protected:
+		int8_t maxCursorPosition() const override;
+		void lcdShowInput() const override;
+};
+
 
 template <typename T>
 class InputState : public CursorInputState{
