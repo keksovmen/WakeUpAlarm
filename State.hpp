@@ -63,7 +63,8 @@ class InputState : public State{
 
 class TimeInputState : public InputState<Time>{
 	public:
-		TimeInputState(void (*consumer)(const Time& val));
+		TimeInputState(void (*consumer)(const Time& val),
+						bool initTimeWithClock=false);
 		
 		// void handleInput(const ButtonEvent& event) override;
 	

@@ -117,10 +117,14 @@ void InputState<T>::validateCursor(){
 
 
 //-----------------------TimeInputState--------------------------
-TimeInputState::TimeInputState(void (*consumer)(const Time& t))
+TimeInputState::TimeInputState(void (*consumer)(const Time& t),
+								bool initTimeWithClock)
 	: InputState<Time>(consumer)
 {
-	//read previous value from eeprom
+	//read previous value from eeprom or use clock
+	if (initTimeWithClock){
+		m_val = clock.getTime();
+	}
 	lcdShowInput();
 }
 
@@ -184,7 +188,8 @@ void TimeInputState::lcdShowInput() const {
 DateInputState::DateInputState(void (*consumer)(const Date& val))
 	: InputState<Date>(consumer)
 {
-	//read previous value from eeprom
+	//read previous value from eeprom or use clock
+	m_val = clock.getDate();
 	lcdShowInput();
 }
 
