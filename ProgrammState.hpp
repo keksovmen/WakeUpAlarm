@@ -22,18 +22,21 @@
 
 #define BUTTONS_COUNT 4
 
-#define diodTask taskVector[DIOD_TASK]
-#define clockTask taskVector[CLOCK_TASK]
-#define displayTask taskVector[DISPLAY_TASK]
-#define disableBackLightTask taskVector[DISABLE_BACKLIGHT_TASK]
-#define alarmTask taskVector[ALARM_TASK]
-#define disableAlarmTask taskVector[DISABLE_ALARM_TASK]
+
+#define TASK_VECTOR taskVector
+
+#define diodTask TASK_VECTOR[DIOD_TASK]
+#define clockTask TASK_VECTOR[CLOCK_TASK]
+#define displayTask TASK_VECTOR[DISPLAY_TASK]
+#define disableBackLightTask TASK_VECTOR[DISABLE_BACKLIGHT_TASK]
+#define alarmTask TASK_VECTOR[ALARM_TASK]
+#define disableAlarmTask TASK_VECTOR[DISABLE_ALARM_TASK]
 
 
 extern Clock clock;
 extern LiquidCrystal_I2C lcd;
 
-extern Task taskVector[TASK_VECTOR_SIZE];
+extern Task TASK_VECTOR[TASK_VECTOR_SIZE];
 									
 extern ButtonsControl<BUTTONS_COUNT> buttons;
 
@@ -58,8 +61,6 @@ bool isSecondPast();
 
 //buttons functionality
 void initInputButtons();
-
-
 
 
 

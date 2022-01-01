@@ -2,7 +2,7 @@
 
 Clock clock;
 LiquidCrystal_I2C lcd(0x27, 16, 2);
-Task taskVector[TASK_VECTOR_SIZE] = {
+Task TASK_VECTOR[TASK_VECTOR_SIZE] = {
 							Task(diodRoutine),
 							Task(timeRoutine), 
 							Task(displayRoutine),
