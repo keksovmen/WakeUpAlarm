@@ -77,21 +77,16 @@ class TimeInputState : public InputState<Time>{
 
 
 
-// class DateInputState : public InputState<Date>{
-	// public:
-		// DateInputState(void (*consumer)(const Date& d));
-		
-		// void handleInput(const ButtonEvent& event) override;
-	
-	// protected:
-		// bool validateInput();
-		// void incrementTimeAtCursor(int8_t change);
-		// void lcdShowInput();
-		
-		// void (*consumer)(const Date& d);
-		// int8_t cursorPosition = 0;
-		// Date m_date;
-// };
+class DateInputState : public InputState<Date>{
+	public:
+		DateInputState(void (*consumer)(const Date& val));
+	protected:
+		int16_t getChange(const ButtonEvent& event) const override;
+		int8_t maxCursorPosition() const override;
+		void applyChange(int16_t change, int8_t cursorPosition) override;
+		bool validateInput() override;
+		void lcdShowInput() const override;
+};
 
 class AlarmState : public State{
 	public:

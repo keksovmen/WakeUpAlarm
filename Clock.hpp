@@ -63,8 +63,13 @@ class Date{
 		Date(int8_t day=1, 
 				int8_t month=1,
 				int16_t year=STARTING_YEAR);
+		//TODO: currentDay must be init properly
+		//not in construction but in general
+		//could make calculateCurrentDay public
+		//but you will have to call it explicitly
+		//if not diff won't work
 		Date (const Date& d);
-		// Date& operator= (const Date& d) = default;
+		Date& operator= (const Date& d);
 		// Date operator-(const Date& t) const;
 		
 		void addDay();

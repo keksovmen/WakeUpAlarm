@@ -102,6 +102,14 @@ Date::Date (const Date& d){
 	calculateCurrentDay();
 }
 
+Date& Date::operator= (const Date& d){
+	this->day = d.day;
+	this->month = d.month;
+	this->year = d.year;
+	calculateCurrentDay();
+	return *this;
+}
+
 void Date::addDay(){
 	day++;
 	currentDay++;
