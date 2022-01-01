@@ -69,33 +69,19 @@ void DefaultState::handleInput(const ButtonEvent& event){
 	}
 }
 
-//-------------------------InputState----------------------------
-template<typename T>
-InputState<T>::InputState(void (*consumer)(const T& val))
-	: consumer(consumer)
-{
+//-------------------------CursorInputState----------------------
+CursorInputState::CursorInputState(){
 	displayTask.disable();
 	lcd.clear();
 	lcd.cursor_on();
 }
 
-template<typename T>
-void InputState<T>::handleInput(const ButtonEvent& event){
-	if (event.buttonIndex == 0 && event.holdMs >= 1000){
-		consumer(m_val);
-		return;
-	}
-	int16_t change = getChange(event);
+void CursorInputState::handleInput(const ButtonEvent& event){
 	moveCursor(event);
-	applyChange(change, cursorPosition);
-	if (!validateInput()){
-		applyChange(-change, cursorPosition);
-	}
-	lcdShowInput();
+	validateCursor();
 }
 
-template<typename T>
-void InputState<T>::moveCursor(const ButtonEvent& event){
+void CursorInputState::moveCursor(const ButtonEvent& event){
 	if (event.buttonIndex == 2){
 		//left
 		cursorPosition--;
@@ -106,14 +92,41 @@ void InputState<T>::moveCursor(const ButtonEvent& event){
 	validateCursor();
 }
 
-template<typename T>
-void InputState<T>::validateCursor(){
+void CursorInputState::validateCursor(){
 	if (cursorPosition < 0){
-		cursorPosition = 0;
-	}else if(cursorPosition > maxCursorPosition()){
 		cursorPosition = maxCursorPosition();
+	}else if(cursorPosition > maxCursorPosition()){
+		cursorPosition = 0;
 	}
 }
+
+
+
+
+
+//-------------------------InputState----------------------------
+template<typename T>
+InputState<T>::InputState(void (*consumer)(const T& val))
+	: consumer(consumer)
+{
+}
+
+template<typename T>
+void InputState<T>::handleInput(const ButtonEvent& event){
+	CursorInputState::handleInput(event);
+	
+	if (event.buttonIndex == 0 && event.holdMs >= 1000){
+		consumer(m_val);
+		return;
+	}
+	int16_t change = getChange(event);
+	applyChange(change, cursorPosition);
+	if (!validateInput()){
+		applyChange(-change, cursorPosition);
+	}
+	lcdShowInput();
+}
+
 
 
 //-----------------------TimeInputState--------------------------

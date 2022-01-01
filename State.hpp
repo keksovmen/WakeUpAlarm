@@ -34,31 +34,41 @@ class DefaultState : public State{
 		void handleInput(const ButtonEvent& event) override;
 };
 
+class CursorInputState : public State{
+	public:
+		CursorInputState();
+		virtual void handleInput(const ButtonEvent& event) override;
+		
+	protected:
+		int8_t cursorPosition = 0;
+		
+		virtual int8_t maxCursorPosition() const = 0;
+		//ideal to call in constructor but doesn't work
+		//https://stackoverflow.com/questions/962132/calling-virtual-functions-inside-constructors
+		//be sure to call in children constructor
+		virtual void lcdShowInput() const = 0;
+		
+	private:
+		void moveCursor(const ButtonEvent& event);
+		void validateCursor();
+		
+};
 
 template <typename T>
-class InputState : public State{
+class InputState : public CursorInputState{
 	public:
 		InputState(void (*consumer)(const T& val));
 		void handleInput(const ButtonEvent& event) override;
 	
 	protected:
 		T m_val;
-		int8_t cursorPosition = 0;
 		
 		virtual int16_t getChange(const ButtonEvent& event) const = 0;
-		virtual int8_t maxCursorPosition() const = 0;
 		virtual void applyChange(int16_t change, int8_t cursorPosition) = 0;
 		virtual bool validateInput() = 0;
-		//ideal to call in constructor but doesn't work
-		//https://stackoverflow.com/questions/962132/calling-virtual-functions-inside-constructors
-		//be sure to call in children constructor
-		virtual void lcdShowInput() const = 0;
 	
 	private:
 		void (*consumer)(const T& val);
-		
-		void moveCursor(const ButtonEvent& event);
-		void validateCursor();
 };
 
 class TimeInputState : public InputState<Time>{

@@ -27,7 +27,7 @@ void setup(void){
 	
 	lcd.init();
 	//DEBUG
-	lcd.backlight();
+	// lcd.backlight();
 	
 	initState();
 	initInputButtons();
