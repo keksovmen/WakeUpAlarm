@@ -3,6 +3,7 @@
 
 // #include <LiquidCrystal_I2C.h>
 // #include "ProgrammState.hpp"
+#include <stdint.h>
 #include "Clock.hpp"
 
 //In cursor position, of form HH:MM[:SS]
@@ -14,6 +15,10 @@ void displayDate(const Date& date);
 //First row is time HH:MM, second row is date dd.mm.yyyy
 void displayDateTime(const Clock& clk);
 
-
+/**
+	@param val can be negative
+	@param length tells how much symbols to dysplay
+**/
+void printZeroPaddedInt(int32_t val, int8_t length);
 
 #endif
