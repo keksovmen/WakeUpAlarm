@@ -113,6 +113,7 @@ class DateInputState : public InputState<Date>{
 };
 
 
+//TODO: instead of 16 bit int use 32 bit, require changes in InputState
 class IntInputState : public InputState<int16_t>{
 	public:
 		IntInputState(void (*consumer)(const int16_t& val),
