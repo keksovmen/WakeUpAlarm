@@ -50,13 +50,13 @@ void MenuInputState::handleInput(const ButtonEvent& event){
 		//select
 		switch(cursorPosition){
 			case 0:
-				setState(StateFactory::createInputTimeState(activateAlarm, false));
+				setState(StateFactory::createInputTimeState(activateAlarm, Time()));
 				return;
 			case 1:
-				setState(StateFactory::createInputTimeState(setTime, true));
+				setState(StateFactory::createInputTimeState(setTime, clock.getTime()));
 				return;
 			case 2:
-				setState(StateFactory::createInputDateState(setDate));
+				setState(StateFactory::createInputDateState(setDate, clock.getDate()));
 				return;
 		}
 	}

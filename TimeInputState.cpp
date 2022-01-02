@@ -4,13 +4,9 @@
 
 
 TimeInputState::TimeInputState(void (*consumer)(const Time& t),
-								bool initTimeWithClock)
-	: InputState<Time>(consumer)
+								const Time& initialValue)
+	: InputState<Time>(consumer, initialValue)
 {
-	//read previous value from eeprom or use clock
-	if (initTimeWithClock){
-		m_val = clock.getTime();
-	}
 	lcdShowInput();
 }
 

@@ -4,8 +4,9 @@
 
 
 template<typename T>
-InputState<T>::InputState(void (*consumer)(const T& val))
-	: consumer(consumer)
+InputState<T>::InputState(void (*consumer)(const T& val),
+							const T& initialValue)
+	: m_val(initialValue), consumer(consumer)
 {
 	lcd.cursor_on();
 }

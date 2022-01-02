@@ -5,14 +5,13 @@
 
 
 IntInputState::IntInputState(void (*consumer)(const int16_t& val),
+						const int16_t& initialValue,
 						int16_t minVal,
-						int16_t maxVal,
-						int16_t initialValue)
-	: InputState<int16_t>(consumer),
+						int16_t maxVal)
+	: InputState<int16_t>(consumer, initialValue),
 		minVal(minVal), maxVal(maxVal),
 		digitsToRepresent(findLongLength(maxVal))
 {
-	m_val = initialValue;
 	lcdShowInput();
 }
 

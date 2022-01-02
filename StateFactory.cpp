@@ -9,23 +9,20 @@ State* StateFactory::createDefaultState()
 	return new(stateStorage)DefaultState();
 }
 
-State* StateFactory::createInputTimeState(void (*consumer)(const Time& val),
-									bool initTimeWithClock)
-{
-	return new(stateStorage)TimeInputState(consumer, initTimeWithClock);
-}										
-
-State* StateFactory::createInputDateState(void (*consumer)(const Date& val))
-{
-	return new(stateStorage)DateInputState(consumer);
-}
-
-State* StateFactory::createAlarmState(){
-	return new(stateStorage)AlarmState();
-}
-
 State* StateFactory::createMenuState(){
 	return new(stateStorage)MenuInputState();
+}
+
+State* StateFactory::createInputTimeState(void (*consumer)(const Time& val),
+									const Time& initialValue)
+{
+	return new(stateStorage)TimeInputState(consumer, initialValue);
+}										
+
+State* StateFactory::createInputDateState(void (*consumer)(const Date& val),
+									const Date& initialValue)
+{
+	return new(stateStorage)DateInputState(consumer, initialValue);
 }
 
 State* StateFactory::createInputIntState(void (*consumer)(const int16_t& val),
@@ -34,5 +31,9 @@ State* StateFactory::createInputIntState(void (*consumer)(const int16_t& val),
 										int16_t initialValue)
 {
 	return new(stateStorage)IntInputState(consumer,
-								minVal, maxVal, initialValue);
+								initialValue, minVal, maxVal);
+}
+
+State* StateFactory::createAlarmState(){
+	return new(stateStorage)AlarmState();
 }

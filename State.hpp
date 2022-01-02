@@ -69,7 +69,8 @@ class MenuInputState : public CursorInputState{
 template <typename T>
 class InputState : public CursorInputState{
 	public:
-		InputState(void (*consumer)(const T& val));
+		InputState(void (*consumer)(const T& val),
+					const T& initialValue);
 		void handleInput(const ButtonEvent& event) override;
 	
 	protected:
@@ -87,9 +88,7 @@ class InputState : public CursorInputState{
 class TimeInputState : public InputState<Time>{
 	public:
 		TimeInputState(void (*consumer)(const Time& val),
-						bool initTimeWithClock=false);
-		
-		// void handleInput(const ButtonEvent& event) override;
+						const Time& initialValue);
 	
 	protected:
 		int16_t getChange(const ButtonEvent& event) const override;
@@ -103,7 +102,8 @@ class TimeInputState : public InputState<Time>{
 
 class DateInputState : public InputState<Date>{
 	public:
-		DateInputState(void (*consumer)(const Date& val));
+		DateInputState(void (*consumer)(const Date& val),
+						const Date& initialValue);
 	protected:
 		int16_t getChange(const ButtonEvent& event) const override;
 		int8_t maxCursorPosition() const override;
@@ -117,9 +117,10 @@ class DateInputState : public InputState<Date>{
 class IntInputState : public InputState<int16_t>{
 	public:
 		IntInputState(void (*consumer)(const int16_t& val),
+						const int16_t& initialValue,
 						int16_t minVal, 
-						int16_t maxVal, 
-						int16_t initialValue);
+						int16_t maxVal
+						);
 	protected:
 		const int16_t minVal;
 		const int16_t maxVal;
@@ -144,12 +145,13 @@ class StateFactory{
 		static State* createDefaultState();
 		static State* createMenuState();
 		static State* createInputTimeState(void (*consumer)(const Time& val),
-									bool initTimeWithClock);
-		static State* createInputDateState(void (*consumer)(const Date& val));
+									const Time& initialValue);
+		static State* createInputDateState(void (*consumer)(const Date& val),
+									const Date& initialValue);
 		static State* createInputIntState(void (*consumer)(const int16_t& val),
-										int16_t minVal, 
-										int16_t maxVal, 
-										int16_t initialValue);
+									int16_t minVal, 
+									int16_t maxVal, 
+									int16_t initialValue);
 		static State* createAlarmState();
 };
 

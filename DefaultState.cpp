@@ -21,7 +21,7 @@ void DefaultState::handleInput(const ButtonEvent& event){
 	if (event.holdMs >= 1000){
 		switch(event.buttonIndex){
 			case 0:
-				setState(StateFactory::createInputTimeState(activateAlarm, false));
+				setState(StateFactory::createInputTimeState(activateAlarm, Time()));
 				break;
 			case 1:
 				lcd.backlight();
@@ -31,7 +31,7 @@ void DefaultState::handleInput(const ButtonEvent& event){
 				setState(StateFactory::createMenuState());
 				break;
 			case 3:
-				setState(StateFactory::createInputIntState(printInt, -100, 1200, - 40));
+				setState(StateFactory::createInputIntState(printInt, -40, -999, 9999));
 				break;
 		}
 	}

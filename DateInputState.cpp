@@ -3,11 +3,10 @@
 #include "ProgrammState.hpp"
 
 
-DateInputState::DateInputState(void (*consumer)(const Date& val))
-	: InputState<Date>(consumer)
+DateInputState::DateInputState(void (*consumer)(const Date& val),
+								const Date& initialValue)
+	: InputState<Date>(consumer, initialValue)
 {
-	//read previous value from eeprom or use clock
-	m_val = clock.getDate();
 	lcdShowInput();
 }
 
