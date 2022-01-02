@@ -18,6 +18,7 @@ class DateInputState;
 class IntInputState;
 class AlarmState;
 
+class StateFactory;
 
 
 
@@ -25,8 +26,6 @@ class State{
 	public:
 		// virtual ~State() = default;
 		virtual void handleInput(const ButtonEvent& event) = 0;
-		static State* getDefaultState();
-		static State* getAlarmState();
 };
 
 
@@ -84,6 +83,7 @@ class InputState : public CursorInputState{
 		void (*consumer)(const T& val);
 };
 
+//TODO: change bool flag in constructor to Clock* 
 class TimeInputState : public InputState<Time>{
 	public:
 		TimeInputState(void (*consumer)(const Time& val),
@@ -138,5 +138,27 @@ class AlarmState : public State{
 		AlarmState();
 		void handleInput(const ButtonEvent& event) override;
 };
+
+class StateFactory{
+	public:
+		static State* createDefaultState();
+		static State* createMenuState();
+		static State* createInputTimeState(void (*consumer)(const Time& val),
+									bool initTimeWithClock);
+		static State* createInputDateState(void (*consumer)(const Date& val));
+		static State* createInputIntState(void (*consumer)(const int16_t& val),
+										int16_t minVal, 
+										int16_t maxVal, 
+										int16_t initialValue);
+		static State* createAlarmState();
+};
+
+//DEBUG
+void activateAlarm(const Time& t);
+
+
+template class InputState<Date>;
+template class InputState<Time>;
+template class InputState<int16_t>;
 
 #endif
