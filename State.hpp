@@ -15,6 +15,7 @@ template<typename T>
 class InputState;
 class TimeInputState;
 class DateInputState;
+class IntInputState;
 class AlarmState;
 
 
@@ -110,6 +111,26 @@ class DateInputState : public InputState<Date>{
 		bool validateInput() override;
 		void lcdShowInput() const override;
 };
+
+
+class IntInputState : public InputState<int16_t>{
+	public:
+		IntInputState(void (*consumer)(const int16_t& val),
+						int16_t minVal, 
+						int16_t maxVal, 
+						int16_t initialValue);
+	protected:
+		const int16_t minVal;
+		const int16_t maxVal;
+		const int8_t digitsToRepresent;
+	
+		int16_t getChange(const ButtonEvent& event) const override;
+		int8_t maxCursorPosition() const override;
+		void applyChange(int16_t change, int8_t cursorPosition) override;
+		bool validateInput() override;
+		void lcdShowInput() const override;
+};
+
 
 class AlarmState : public State{
 	public:
