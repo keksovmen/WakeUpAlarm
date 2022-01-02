@@ -26,7 +26,7 @@ void backlightRoutine(){
 }
 
 void alarmRoutine(){
-	state = State::getAlarmState();
+	setState(StateFactory::createAlarmState());
 }
 
 void disableAlarmRoutine(){
@@ -34,6 +34,6 @@ void disableAlarmRoutine(){
 	//by logic it will be alarm, because when you entered
 	//alarm state you can only change it to default
 	//and when you changing you disable this routine
-	state->handleInput(ButtonEvent(0, 1000));
-	state = State::getDefaultState();
+	getState()->handleInput(ButtonEvent(0, 1000));
+	setState(StateFactory::createDefaultState());
 }
