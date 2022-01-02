@@ -17,8 +17,8 @@ void displayDateTime(const Clock& clk);
 
 /**
 	@param val can be negative
-	@param length tells how much symbols to dysplay
+	@param totalSymbols tells how much symbols to display
 **/
-void printZeroPaddedInt(int32_t val, int8_t length);
+void printZeroPaddedInt(int32_t val, int8_t totalSymbols);
 
 #endif
