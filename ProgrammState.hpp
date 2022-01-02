@@ -45,7 +45,7 @@ extern State* state;
 //init
 void initState();
 
-//routines 
+//task routines 
 void diodRoutine();
 void timeRoutine();
 void displayRoutine();
@@ -67,6 +67,9 @@ void initInputButtons();
 void setState(State* s);
 State* getState();
 
+
+//alarms functionality
+void activateAlarm(const Time& t);
 
 //void disableDisplayTask(){}
 //void enableDisplayTask(){}

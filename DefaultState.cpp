@@ -1,6 +1,7 @@
 #include "State.hpp"
 #include "LcdPrintFunctions.hpp"
 #include "ProgrammState.hpp"
+#include "Settings.hpp"
 
 
 void printInt(const int16_t& val){
@@ -21,7 +22,7 @@ void DefaultState::handleInput(const ButtonEvent& event){
 	if (event.holdMs >= 1000){
 		switch(event.buttonIndex){
 			case 0:
-				setState(StateFactory::createInputTimeState(activateAlarm, Time()));
+				activateAlarm(getAlarmTime(0));
 				break;
 			case 1:
 				lcd.backlight();

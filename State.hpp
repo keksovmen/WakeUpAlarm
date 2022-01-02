@@ -36,6 +36,7 @@ class DefaultState : public State{
 		void handleInput(const ButtonEvent& event) override;
 };
 
+
 class CursorInputState : public State{
 	public:
 		CursorInputState();
@@ -55,6 +56,7 @@ class CursorInputState : public State{
 		void validateCursor();
 		
 };
+
 
 class MenuInputState : public CursorInputState{
 	public:
@@ -84,7 +86,7 @@ class InputState : public CursorInputState{
 		void (*consumer)(const T& val);
 };
 
-//TODO: change bool flag in constructor to Clock* 
+
 class TimeInputState : public InputState<Time>{
 	public:
 		TimeInputState(void (*consumer)(const Time& val),
@@ -97,7 +99,6 @@ class TimeInputState : public InputState<Time>{
 		bool validateInput() override;
 		void lcdShowInput() const override;
 };
-
 
 
 class DateInputState : public InputState<Date>{
@@ -155,8 +156,6 @@ class StateFactory{
 		static State* createAlarmState();
 };
 
-//DEBUG
-void activateAlarm(const Time& t);
 
 
 template class InputState<Date>;

@@ -27,3 +27,16 @@ void setState(State* s){
 State* getState(){
 	return state;
 }
+
+void activateAlarm(const Time& t){
+		int32_t diff = t.diff(clock.getTime());
+	if (diff <= 0){
+		diff = abs(diff) + SECONDS_IN_DAY;
+	}
+	// DEBUG
+	Serial.println(diff);
+	
+	alarmTask.startTimer(diff);
+	disableAlarmTask.startTimer(diff + 30);
+	setState(StateFactory::createDefaultState());
+}
