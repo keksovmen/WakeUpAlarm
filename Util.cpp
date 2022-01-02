@@ -19,3 +19,11 @@ int8_t findLongLength(int32_t val){
 	}
 	return result;
 }
+
+int32_t pow10(int8_t power){
+	int32_t result = 1;
+	for (int i = 1; i < power; i++){
+		result *= 10;
+	}
+	return result;
+}
