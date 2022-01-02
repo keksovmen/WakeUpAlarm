@@ -63,6 +63,10 @@ bool isSecondPast();
 void initInputButtons();
 
 
+//state explicit calls for easing tracking
+void setState(State* s);
+State* getState();
+
 
 //void disableDisplayTask(){}
 //void enableDisplayTask(){}

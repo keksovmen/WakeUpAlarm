@@ -17,5 +17,14 @@ State* state = nullptr;
 
 void initState(){
 	// lcd.init();
-	state = State::getDefaultState();
+	setState(State::getDefaultState());
+	// state = State::getDefaultState();
+}
+
+void setState(State* s){
+	state = s;
+}
+
+State* getState(){
+	return state;
 }
