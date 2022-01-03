@@ -15,6 +15,9 @@ void displayDate(const Date& date);
 //First row is time HH:MM, second row is date dd.mm.yyyy
 void displayDateTime(const Clock& clk);
 
+//Prints date time from global clock, and A12 for active alarms
+void printHomePage(bool clear=false);
+
 /**
 	@param val can be negative
 	@param totalSymbols tells how much symbols to display

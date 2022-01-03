@@ -31,6 +31,23 @@ void displayDateTime(const Clock& clk){
 	displayDate(clk.getDate());
 }
 
+void printHomePage(bool clear){
+	if (clear){
+		lcd.clear();
+	}
+	displayDateTime(clock);
+	// if (alarm1Task.isActivated()){
+		// lcd.setCursor(13, 1);
+		// lcd.print("A1");
+	// }
+	// if (alarm2Task.isActivated()){
+		// lcd.setCursor(13, 1);
+		// lcd.print("A");
+		// lcd.setCursor(15, 1);
+		// lcd.print(2);
+	// }
+}
+
 void printZeroPaddedInt(int32_t val, int8_t totalSymbols){
 	char buffer[12];
 	int32_t divider = pow10(totalSymbols);
