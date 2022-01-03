@@ -19,6 +19,7 @@ class AlarmsHandler : public TimeConsumer{
 		
 		void activateAlarm(uint8_t alarmId);
 		void deactivateAlarm(uint8_t alarmId);
+		void flipAlarm(uint8_t alarmId);
 		
 		void setAlarmTime(const Time& time, uint8_t alarmId);
 		const Time& getAlarmTime(uint8_t alarmId) const;

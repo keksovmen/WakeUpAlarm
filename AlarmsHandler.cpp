@@ -45,6 +45,18 @@ void AlarmsHandler<N>::deactivateAlarm(uint8_t alarmId){
 }
 
 template<uint8_t N>
+void AlarmsHandler<N>::flipAlarm(uint8_t alarmId){
+	if(alarmId >= N){
+		return;
+	}
+	if(isAlarmActivated(alarmId)){
+		deactivateAlarm(alarmId);
+	}else{
+		activateAlarm(alarmId);
+	}
+}
+
+template<uint8_t N>
 void AlarmsHandler<N>::setAlarmTime(const Time& time, uint8_t alarmId){
 	//write to EEPROM
 	if(alarmId >= N){
