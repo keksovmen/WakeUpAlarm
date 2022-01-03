@@ -36,16 +36,18 @@ void printHomePage(bool clear){
 		lcd.clear();
 	}
 	displayDateTime(clock);
-	// if (alarm1Task.isActivated()){
-		// lcd.setCursor(13, 1);
-		// lcd.print("A1");
-	// }
-	// if (alarm2Task.isActivated()){
-		// lcd.setCursor(13, 1);
-		// lcd.print("A");
-		// lcd.setCursor(15, 1);
-		// lcd.print(2);
-	// }
+	if (alarms.isAnyActivated()){
+		const int8_t beginning = 15 - (TOTAL_ALARMS - 1);
+		lcd.setCursor(beginning - 1, 1);
+		lcd.print("A");
+		for (int8_t i = 0; i < TOTAL_ALARMS; i ++){
+			if (alarms.isAlarmActivated(i)){
+				lcd.print(i + 1);
+			}else{
+				lcd.setCursor(beginning + i + 1, 1);
+			}
+		}
+	}
 }
 
 void printZeroPaddedInt(int32_t val, int8_t totalSymbols){

@@ -6,7 +6,8 @@
 #include "Timer.hpp"
 #include "Clock.hpp"
 
-#define TOTAL_ALARMS 2
+
+#define TOTAL_ALARMS 3
 
 
 

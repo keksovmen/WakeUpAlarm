@@ -19,7 +19,5 @@ void initSettingsParameters();
 
 void setBackLightDuration(uint8_t durationS);
 void setAlarmAutoOffAfter(uint8_t seconds);
-void setAlarmTime(const Time& time, uint8_t alarmId);
-const Time& getAlarmTime(uint8_t alarmId);
 
 #endif

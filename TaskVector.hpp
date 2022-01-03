@@ -1,14 +1,13 @@
 #ifndef TASK_VECTOR_H
 #define TASK_VECTOR_H
 
-#define TASK_VECTOR_SIZE 6
+#define TASK_VECTOR_SIZE 5
 
 #define DIOD_TASK 0
 #define CLOCK_TASK 1
 #define DISPLAY_TASK 2
 #define DISABLE_BACKLIGHT_TASK 3
-#define ALARM_TASK 4
-#define DISABLE_ALARM_TASK 5
+#define DISABLE_ALARM_TASK 4
 
 
 

@@ -4,12 +4,21 @@
 #include "ProgrammState.hpp"
 #include "Settings.hpp"
 
+
+#define ALARMS_MENUS_OFFSET 2
 //remember current lcd has 16 symbols on the line
 static const char* MENUS[3]={
 						"Set time",
 						"Set date",
 						"Set alarm time "};
+//cursed but does job
+static uint8_t selectedAlarmId = 0;
 
+
+void setTime(const Time& t){
+	clock.setTime(t);
+	setState(StateFactory::createDefaultState());
+}
 
 void setDate(const Date& d){
 	clock.setDate(d);
@@ -20,10 +29,12 @@ void setDate(const Date& d){
 	setState(StateFactory::createDefaultState());
 }
 
-void setTime(const Time& t){
-	clock.setTime(t);
+void setSelectedAlarmTime(const Time& t){
+	alarms.setAlarmTime(t, selectedAlarmId);
 	setState(StateFactory::createDefaultState());
 }
+
+
 
 
 
@@ -42,19 +53,11 @@ void MenuInputState::handleInput(const ButtonEvent& event){
 			case 1:
 				setState(StateFactory::createInputDateState(setDate, clock.getDate()));
 				return;
-			case 2: 
+			default:	//for alarms settings
+				selectedAlarmId = cursorPosition - ALARMS_MENUS_OFFSET;
 				setState(StateFactory::createInputTimeState(
-					[](const Time& t){
-							setAlarmTime(t, 0);
-							setState(StateFactory::createDefaultState());
-						}, getAlarmTime(0)));
-				return;
-			case 3:
-				setState(StateFactory::createInputTimeState(
-					[](const Time& t){
-							setAlarmTime(t, 1);
-							setState(StateFactory::createDefaultState());
-						}, getAlarmTime(1)));
+						setSelectedAlarmTime,
+						alarms.getAlarmTime(selectedAlarmId)));
 				return;
 		}
 	}
@@ -62,15 +65,15 @@ void MenuInputState::handleInput(const ButtonEvent& event){
 }
 
 int8_t MenuInputState::maxCursorPosition() const {
-	return 3;
+	return 1 + TOTAL_ALARMS;
 }
 
 
 void MenuInputState::lcdShowInput() const {
 	lcd.clear();
-	if (cursorPosition >= 2){
-		lcd.print(MENUS[2]);
-		lcd.print(cursorPosition - 1);
+	if (cursorPosition >= ALARMS_MENUS_OFFSET){
+		lcd.print(MENUS[ALARMS_MENUS_OFFSET]);
+		lcd.print(cursorPosition - (ALARMS_MENUS_OFFSET - 1));
 	}else{
 		lcd.print(MENUS[cursorPosition]);
 	}

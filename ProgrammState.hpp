@@ -10,6 +10,7 @@
 #include "TaskVector.hpp"
 #include "ButtonsControl.hpp"
 #include "State.hpp"
+#include "AlarmsHandler.hpp"
 
 
 #define TIMER1_DIVIDER 1024
@@ -29,7 +30,6 @@
 #define clockTask TASK_VECTOR[CLOCK_TASK]
 #define displayTask TASK_VECTOR[DISPLAY_TASK]
 #define disableBackLightTask TASK_VECTOR[DISABLE_BACKLIGHT_TASK]
-#define alarmTask TASK_VECTOR[ALARM_TASK]
 #define disableAlarmTask TASK_VECTOR[DISABLE_ALARM_TASK]
 
 
@@ -42,6 +42,9 @@ extern ButtonsControl<BUTTONS_COUNT> buttons;
 
 extern State* state;
 
+extern AlarmsHandler<TOTAL_ALARMS> alarms;
+
+
 //init
 void initState();
 
@@ -50,7 +53,6 @@ void diodRoutine();
 void timeRoutine();
 void displayRoutine();
 void backlightRoutine();
-void alarmRoutine();
 void disableAlarmRoutine();
 
 
@@ -68,9 +70,5 @@ void setState(State* s);
 State* getState();
 
 
-//alarms functionality
-void activateAlarm(const Time& t);
 
-//void disableDisplayTask(){}
-//void enableDisplayTask(){}
 #endif

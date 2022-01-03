@@ -6,6 +6,7 @@
 #include "ProgrammState.hpp"
 #include "State.hpp"
 #include "LcdPrintFunctions.hpp"
+#include "Settings.hpp"
 
 
 // #define AUDIO_OUT 9
@@ -27,7 +28,9 @@ void setup(void){
 	
 	lcd.init();
 	//DEBUG
-	// lcd.backlight();
+	lcd.backlight();
+	
+	initSettingsParameters();
 	
 	initState();
 	initInputButtons();
@@ -54,7 +57,7 @@ void loop(void){
 		Serial.print(", duration in milliseconds ");
 		Serial.println(event.holdMs);
 		
-		state->handleInput(event);
+		getState()->handleInput(event);
 	}
 }
 
@@ -63,6 +66,7 @@ void tasksLoop(uint8_t secondsPast){
 	for (int i = 0; i < TASK_VECTOR_SIZE; i++){
 		taskVector[i].consumeTime(secondsPast);
 	}
+	alarms.consumeTime(secondsPast);
 }
 
 // void wait(unsigned int ticksCount){

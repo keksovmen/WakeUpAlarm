@@ -22,11 +22,17 @@ void DefaultState::handleInput(const ButtonEvent& event){
 	if (event.holdMs >= 1000){
 		switch(event.buttonIndex){
 			case 0:
-				activateAlarm(getAlarmTime(0));
+				if (event.holdMs >= 2000){
+					//for second timer
+					alarms.flipAlarm(1);
+				}else{
+					alarms.flipAlarm(0);
+				}
+				printHomePage(true);
 				break;
 			case 1:
 				lcd.backlight();
-				disableBackLightTask.startTimer(5);
+				disableBackLightTask.startTimer(BACKLIGHT_DURATION);
 				break;
 			case 2:
 				setState(StateFactory::createMenuState());

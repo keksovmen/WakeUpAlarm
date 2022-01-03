@@ -16,18 +16,14 @@ void timeRoutine(){
 }
 
 void displayRoutine(){
-	displayDateTime(clock);
+	printHomePage();
 	displayTask.startTimer(1);
-	
 }
 
 void backlightRoutine(){
 	lcd.noBacklight();
 }
 
-void alarmRoutine(){
-	setState(StateFactory::createAlarmState());
-}
 
 void disableAlarmRoutine(){
 	//state must be alarm otherwise won't work
@@ -35,5 +31,4 @@ void disableAlarmRoutine(){
 	//alarm state you can only change it to default
 	//and when you changing you disable this routine
 	getState()->handleInput(ButtonEvent(0, 1000));
-	setState(StateFactory::createDefaultState());
 }
