@@ -60,3 +60,11 @@ const Time& AlarmsHandler<N>::getAlarmTime(uint8_t alarmId) const{
 	}
 	return alarmsTimes[alarmId];
 }
+
+template<uint8_t N>
+bool AlarmsHandler<N>::isAlarmActivated(uint8_t alarmId) const{
+	if(alarmId >= N){
+		return false;
+	}
+	return alarmsTimers[alarmId].isActivated();
+}
