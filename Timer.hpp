@@ -1,10 +1,13 @@
-#include "ConsumableEvent.hpp"
 #include <stdint.h>
 
-class Timer : public ConsumableEvent{
+#include "ConsumableEvent.hpp"
+#include "TimeConsumer.hpp"
+
+
+class Timer : public ConsumableEvent, public TimeConsumer{
 	public:
+		void consumeTime(int32_t deltaTime) override;
 		void startTimer(int32_t delay);
-		void consumeTime(int32_t deltaTime);
 		
 		void disable(){isActivatedFlag = false;};
 		bool isActivated() const {return isActivatedFlag;};
