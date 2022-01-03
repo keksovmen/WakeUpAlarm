@@ -17,6 +17,10 @@ static volatile uint16_t ticks;
 static const uint8_t BOUNDARY = 250;
 static const uint8_t TICK_MULTIPLAYER = 16;
 
+static void enableClock(void);
+static void disableClock(void);
+
+
 
 template<uint8_t N>
 ButtonsControl<N>::ButtonsControl(){
@@ -46,7 +50,7 @@ void ButtonsControl<N>::deactivate(uint8_t buttonIndex){
 		
 		states[buttonIndex] = false;
 		button = ButtonEvent(buttonIndex, ticks * TICK_MULTIPLAYER);
-		hasEvent = true;
+		generateEvent();
 		activated = false;
 	}
 }
@@ -61,12 +65,6 @@ void ButtonsControl<N>::deactivateAll(){
 		deactivate(i);
 	}
 }
-
-template<uint8_t N>
-void ButtonsControl<N>::consumeEvent(){hasEvent = false;}
-
-template<uint8_t N>
-bool ButtonsControl<N>::eventReady() const {return hasEvent;}
 
 template<uint8_t N>
 ButtonEvent ButtonsControl<N>::getEvent() const{
