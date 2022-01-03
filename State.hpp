@@ -137,8 +137,10 @@ class IntInputState : public InputState<int16_t>{
 
 class AlarmState : public State{
 	public:
-		AlarmState();
+		AlarmState(uint8_t alarmId);
 		void handleInput(const ButtonEvent& event) override;
+	protected:
+		const uint8_t alarmId;
 };
 
 class StateFactory{
@@ -153,7 +155,7 @@ class StateFactory{
 									int16_t minVal, 
 									int16_t maxVal, 
 									int16_t initialValue);
-		static State* createAlarmState();
+		static State* createAlarmState(uint8_t alarmId);
 };
 
 

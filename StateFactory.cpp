@@ -34,6 +34,6 @@ State* StateFactory::createInputIntState(void (*consumer)(const int16_t& val),
 								initialValue, minVal, maxVal);
 }
 
-State* StateFactory::createAlarmState(){
-	return new(stateStorage)AlarmState();
+State* StateFactory::createAlarmState(uint8_t alarmId){
+	return new(stateStorage)AlarmState(alarmId);
 }
