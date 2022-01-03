@@ -68,3 +68,13 @@ bool AlarmsHandler<N>::isAlarmActivated(uint8_t alarmId) const{
 	}
 	return alarmsTimers[alarmId].isActivated();
 }
+
+template<uint8_t N>
+bool AlarmsHandler<N>::isAnyActivated() const{
+	for (uint8_t i = 0; i < N; i++){
+		if(alarmsTimers[i].isActivated()){
+			return true;
+		}
+	}
+	return false;
+}

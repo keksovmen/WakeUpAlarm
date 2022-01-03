@@ -23,6 +23,7 @@ class AlarmsHandler : public TimeConsumer{
 		void setAlarmTime(const Time& time, uint8_t alarmId);
 		const Time& getAlarmTime(uint8_t alarmId) const;
 		bool isAlarmActivated(uint8_t alarmId) const;
+		bool isAnyActivated() const;
 		
 	private:
 		Timer alarmsTimers[N];
