@@ -1,3 +1,6 @@
+#ifndef TIMER_H
+#define TIMER_H
+
 #include <stdint.h>
 
 #include "ConsumableEvent.hpp"
@@ -17,3 +20,5 @@ class Timer : public ConsumableEvent, public TimeConsumer{
 		int32_t remainingDelay = 0;
 	
 };
+
+#endif

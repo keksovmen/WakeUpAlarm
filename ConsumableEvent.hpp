@@ -1,3 +1,6 @@
+#ifndef CONSUMABLE_EVENT_H
+#define CONSUMABLE_EVENT_H
+
 #include <stdbool.h>
 
 class ConsumableEvent{
@@ -8,3 +11,5 @@ class ConsumableEvent{
 	private:
 		bool eventFlag = false;
 };
+
+#endif
