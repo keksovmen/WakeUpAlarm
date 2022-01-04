@@ -9,6 +9,9 @@
 #include "Timer.hpp"
 
 
+#define MIN_BACK_LIGHT_DURATION 3
+#define MAX_BACK_LIGHT_DURATION 60
+
 
 class LcdLightHandler : 
 		public EventHandler<ButtonEvent>, 

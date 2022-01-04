@@ -8,7 +8,8 @@
 
 
 #define TOTAL_ALARMS 2
-
+#define MIN_AUTO_OFF_PERIOD 10
+#define MAX_AUTO_OFF_PERIOD 3600
 
 
 template<uint8_t N>
