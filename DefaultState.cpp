@@ -18,7 +18,7 @@ DefaultState::DefaultState(){
 }
 
 
-void DefaultState::handleInput(const ButtonEvent& event){
+void DefaultState::handleEvent(const ButtonEvent& event){
 	if (event.holdMs >= 1000){
 		switch(event.buttonIndex){
 			case 0:

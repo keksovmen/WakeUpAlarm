@@ -25,7 +25,7 @@ void AlarmsHandler<N>::consumeTime(int32_t deltaTime){
 	if (alarmOffTimer.eventReady()){
 		alarmOffTimer.consumeEvent();
 		//turn off alarm
-		getState()->handleInput(ButtonEvent(0, 1000));
+		getState()->handleEvent(ButtonEvent(0, 1000));
 	}
 }
 

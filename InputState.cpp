@@ -12,8 +12,8 @@ InputState<T>::InputState(void (*consumer)(const T& val),
 }
 
 template<typename T>
-void InputState<T>::handleInput(const ButtonEvent& event){
-	CursorInputState::handleInput(event);
+void InputState<T>::handleEvent(const ButtonEvent& event){
+	CursorInputState::handleEvent(event);
 	
 	if (event.buttonIndex == 0 && event.holdMs >= 1000){
 		consumer(m_val);

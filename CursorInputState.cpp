@@ -8,7 +8,7 @@ CursorInputState::CursorInputState(){
 	lcd.clear();
 }
 
-void CursorInputState::handleInput(const ButtonEvent& event){
+void CursorInputState::handleEvent(const ButtonEvent& event){
 	moveCursor(event);
 	validateCursor();
 }

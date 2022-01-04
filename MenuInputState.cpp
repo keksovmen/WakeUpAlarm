@@ -52,8 +52,8 @@ MenuInputState::MenuInputState(){
 	lcdShowInput();
 }
 
-void MenuInputState::handleInput(const ButtonEvent& event){
-	CursorInputState::handleInput(event);
+void MenuInputState::handleEvent(const ButtonEvent& event){
+	CursorInputState::handleEvent(event);
 	if (event.buttonIndex == 0){
 		//select
 		switch(cursorPosition){

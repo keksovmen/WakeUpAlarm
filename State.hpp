@@ -2,6 +2,7 @@
 #define STATE_H
 
 
+#include "EventHandler.hpp"
 #include "ButtonsControl.hpp"
 #include "Clock.hpp"
 
@@ -22,10 +23,7 @@ class StateFactory;
 
 
 
-class State{
-	public:
-		// virtual ~State() = default;
-		virtual void handleInput(const ButtonEvent& event) = 0;
+class State : public EventHandler<ButtonEvent>{
 };
 
 
@@ -33,14 +31,14 @@ class DefaultState : public State{
 	public:
 		DefaultState();
 		
-		void handleInput(const ButtonEvent& event) override;
+		void handleEvent(const ButtonEvent& event) override;
 };
 
 
 class CursorInputState : public State{
 	public:
 		CursorInputState();
-		virtual void handleInput(const ButtonEvent& event) override;
+		virtual void handleEvent(const ButtonEvent& event) override;
 		
 	protected:
 		int8_t cursorPosition = 0;
@@ -61,7 +59,7 @@ class CursorInputState : public State{
 class MenuInputState : public CursorInputState{
 	public:
 		MenuInputState();
-		void handleInput(const ButtonEvent& event) override;
+		void handleEvent(const ButtonEvent& event) override;
 	protected:
 		int8_t maxCursorPosition() const override;
 		void lcdShowInput() const override;
@@ -73,7 +71,7 @@ class InputState : public CursorInputState{
 	public:
 		InputState(void (*consumer)(const T& val),
 					const T& initialValue);
-		void handleInput(const ButtonEvent& event) override;
+		void handleEvent(const ButtonEvent& event) override;
 	
 	protected:
 		T m_val;
@@ -138,7 +136,7 @@ class IntInputState : public InputState<int16_t>{
 class AlarmState : public State{
 	public:
 		AlarmState(uint8_t alarmId);
-		void handleInput(const ButtonEvent& event) override;
+		void handleEvent(const ButtonEvent& event) override;
 	protected:
 		const uint8_t alarmId;
 };

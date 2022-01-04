@@ -54,7 +54,7 @@ void loop(void){
 		Serial.println(event.holdMs);
 		
 		lcdLightHandler.handleEvent(event);
-		getState()->handleInput(event);
+		getState()->handleEvent(event);
 	}
 }
 
