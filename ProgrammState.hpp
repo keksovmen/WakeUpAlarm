@@ -30,7 +30,6 @@
 #define clockTask TASK_VECTOR[CLOCK_TASK]
 #define displayTask TASK_VECTOR[DISPLAY_TASK]
 #define disableBackLightTask TASK_VECTOR[DISABLE_BACKLIGHT_TASK]
-#define disableAlarmTask TASK_VECTOR[DISABLE_ALARM_TASK]
 
 
 extern Clock clock;

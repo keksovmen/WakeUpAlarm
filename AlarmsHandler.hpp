@@ -7,7 +7,7 @@
 #include "Clock.hpp"
 
 
-#define TOTAL_ALARMS 3
+#define TOTAL_ALARMS 2
 
 
 
@@ -27,10 +27,16 @@ class AlarmsHandler : public TimeConsumer{
 		bool isAlarmActivated(uint8_t alarmId) const;
 		bool isAnyActivated() const;
 		
+		void setAlarmOffAfter(uint16_t delayS);
+		const uint16_t& getAlarmOffAfter();
+		void disableAlarmAutoOff();
+		
 	private:
 		Timer alarmsTimers[N];
 		Time alarmsTimes[N];
-	
+		
+		Timer alarmOffTimer;
+		uint16_t alarmOffAfterS;
 };
 
 

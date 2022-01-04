@@ -6,8 +6,7 @@ Task TASK_VECTOR[TASK_VECTOR_SIZE] = {
 							Task(diodRoutine),
 							Task(timeRoutine), 
 							Task(displayRoutine),
-							Task(backlightRoutine),
-							Task(disableAlarmRoutine)
+							Task(backlightRoutine)
 							};
 ButtonsControl<BUTTONS_COUNT> buttons;
 
@@ -16,6 +15,7 @@ State* state = nullptr;
 AlarmsHandler<TOTAL_ALARMS> alarms;
 
 void initState(){
+	alarms.init();
 	setState(StateFactory::createDefaultState());
 }
 

@@ -7,6 +7,7 @@
 template<uint8_t N>
 void AlarmsHandler<N>::init(){
 	//read alarmsTimes from EEPROM
+	alarmOffAfterS = 20;
 }
 
 
@@ -16,8 +17,15 @@ void AlarmsHandler<N>::consumeTime(int32_t deltaTime){
 		alarmsTimers[i].consumeTime(deltaTime);
 		if(alarmsTimers[i].eventReady()){
 			alarmsTimers[i].consumeEvent();
+			alarmOffTimer.startTimer(alarmOffAfterS + deltaTime);
 			setState(StateFactory::createAlarmState(i));
 		}
+	}
+	alarmOffTimer.consumeTime(deltaTime);
+	if (alarmOffTimer.eventReady()){
+		alarmOffTimer.consumeEvent();
+		//turn off alarm
+		getState()->handleInput(ButtonEvent(0, 1000));
 	}
 }
 
@@ -88,4 +96,20 @@ bool AlarmsHandler<N>::isAnyActivated() const{
 		}
 	}
 	return false;
+}
+
+template<uint8_t N>
+void AlarmsHandler<N>::setAlarmOffAfter(uint16_t delayS){
+	//write to EEPROM
+	alarmOffAfterS = delayS;
+}
+
+template<uint8_t N>
+void AlarmsHandler<N>::disableAlarmAutoOff(){
+	alarmOffTimer.disable();
+}
+
+template<uint8_t N>
+const uint16_t& AlarmsHandler<N>::getAlarmOffAfter(){
+	return alarmOffAfterS;
 }
