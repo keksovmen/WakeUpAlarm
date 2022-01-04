@@ -9,8 +9,8 @@
 
 class Timer : public ConsumableEvent, public TimeConsumer{
 	public:
-		void consumeTime(int32_t deltaTime) override;
-		void startTimer(int32_t delay);
+		virtual void consumeTime(int32_t deltaTime) override;
+		virtual void startTimer(int32_t delay);
 		
 		void disable(){isActivatedFlag = false;};
 		bool isActivated() const {return isActivatedFlag;};

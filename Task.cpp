@@ -1,21 +1,18 @@
 #include "Task.hpp"
 
 void Task::consumeTime(int32_t deltaTimeS){
-	if (isActive == false){
-		return;
-	}
-	remainingDelayS -= deltaTimeS;
-	if (remainingDelayS <= 0){
-		isActive = false;
-		activity();
-	}
+	Timer::consumeTime(deltaTimeS);
+	actIfEvent();
 }
 
 void Task::startTimer(int32_t delayS){
-	if (delayS == 0){
+	Timer::startTimer(delayS);
+	actIfEvent();
+}
+
+void Task::actIfEvent(){
+	if (eventReady()){
+		consumeEvent();
 		activity();
-	}else{
-		remainingDelayS = delayS;
-		isActive = true;
 	}
 }
