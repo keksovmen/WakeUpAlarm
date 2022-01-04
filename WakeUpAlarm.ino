@@ -34,7 +34,6 @@ void setup(void){
 	initRealTimeTimer();
 	
 	diodTask.startTimer(0);
-	clockTask.startTimer(0);
 	displayTask.startTimer(0);
 
 	// tone(AUDIO_OUT, 1000);
@@ -61,6 +60,8 @@ void loop(void){
 
 
 void tasksLoop(uint8_t secondsPast){
+	clock.consumeTime(secondsPast);
+	
 	for (int i = 0; i < TASK_VECTOR_SIZE; i++){
 		taskVector[i].consumeTime(secondsPast);
 	}

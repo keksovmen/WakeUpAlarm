@@ -28,7 +28,6 @@
 #define TASK_VECTOR taskVector
 
 #define diodTask TASK_VECTOR[DIOD_TASK]
-#define clockTask TASK_VECTOR[CLOCK_TASK]
 #define displayTask TASK_VECTOR[DISPLAY_TASK]
 
 
@@ -52,7 +51,6 @@ void initState();
 
 //task routines 
 void diodRoutine();
-void timeRoutine();
 void displayRoutine();
 
 

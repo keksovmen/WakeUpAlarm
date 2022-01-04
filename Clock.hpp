@@ -1,6 +1,8 @@
 #ifndef CLOCK_H
 #define CLOCK_H
+
 #include <stdint.h>
+#include "TimeConsumer.hpp"
 
 #define STARTING_YEAR 1970
 #define MAX_YEAR 9999
@@ -82,12 +84,15 @@ class Date{
 };
 
 
-class Clock{
+class Clock : public TimeConsumer{
 	public:
 		Clock(){};
 		Clock(const Time& time,
 				const Date& date) : time(time), date(date){};
 		Clock(const Clock& clk) = default;
+		
+		//deltaTime must be in seconds
+		void consumeTime(int32_t deltaTime) override;
 		
 		// bool operator< (const Cloc& l, const Clock& r);
 		bool operator<= (const Clock& v);

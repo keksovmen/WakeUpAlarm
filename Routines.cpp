@@ -10,11 +10,6 @@ void diodRoutine(){
 	diodTask.startTimer(1);
 }
 
-void timeRoutine(){
-	clock.incrementSecond();
-	clockTask.startTimer(1);
-}
-
 void displayRoutine(){
 	printHomePage();
 	displayTask.startTimer(1);

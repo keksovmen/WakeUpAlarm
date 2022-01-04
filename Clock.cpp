@@ -157,6 +157,12 @@ void Date::calculateCurrentDay(){
 
 //-----------------------Clock-----------------------------
 
+void Clock::consumeTime(int32_t deltaTime){
+	for(int32_t i = 0; i < deltaTime; i++){
+		incrementSecond();
+	}
+}
+
 bool Clock::operator<= (const Clock& v){
 	return diff(v) <= 0;
 }
