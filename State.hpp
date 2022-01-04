@@ -24,6 +24,9 @@ class StateFactory;
 
 
 class State : public EventHandler<ButtonEvent>{
+	protected:
+		bool isCancelEvent(const ButtonEvent& event);
+		bool isAcceptEvent(const ButtonEvent& event);
 };
 
 

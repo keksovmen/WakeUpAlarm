@@ -54,6 +54,10 @@ MenuInputState::MenuInputState(){
 
 void MenuInputState::handleEvent(const ButtonEvent& event){
 	CursorInputState::handleEvent(event);
+	if (isCancelEvent(event)){
+		// setState(StateFactory::createDefaultState());
+		return;
+	}
 	if (event.buttonIndex == 0){
 		//select
 		switch(cursorPosition){

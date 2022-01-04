@@ -9,6 +9,12 @@ CursorInputState::CursorInputState(){
 }
 
 void CursorInputState::handleEvent(const ButtonEvent& event){
+	if (isCancelEvent(event)){
+		setState(StateFactory::createDefaultState());
+		//TODO: this method called as parent from children
+		//do something to prevent crushes when state changes
+		return;
+	}
 	moveCursor(event);
 	validateCursor();
 }
