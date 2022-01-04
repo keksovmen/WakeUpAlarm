@@ -1,8 +1,7 @@
-// #include <New.h>
 #include "State.hpp"
 #include "LcdPrintFunctions.hpp"
 #include "ProgrammState.hpp"
-#include "Settings.hpp"
+
 
 
 #define ALARMS_MENUS_OFFSET 4

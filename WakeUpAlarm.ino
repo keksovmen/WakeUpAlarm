@@ -6,13 +6,11 @@
 #include "ProgrammState.hpp"
 #include "State.hpp"
 #include "LcdPrintFunctions.hpp"
-#include "Settings.hpp"
 
 
 // #define AUDIO_OUT 9
 
 
-// State* state = State::getDefaultState();
 
 
 
@@ -30,7 +28,6 @@ void setup(void){
 	//DEBUG
 	lcd.backlight();
 	
-	initSettingsParameters();
 	
 	initState();
 	initInputButtons();
