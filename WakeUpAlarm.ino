@@ -57,6 +57,7 @@ void loop(void){
 		Serial.print(", duration in milliseconds ");
 		Serial.println(event.holdMs);
 		
+		lcdLightHandler.handleEvent(event);
 		getState()->handleInput(event);
 	}
 }
@@ -67,6 +68,7 @@ void tasksLoop(uint8_t secondsPast){
 		taskVector[i].consumeTime(secondsPast);
 	}
 	alarms.consumeTime(secondsPast);
+	lcdLightHandler.consumeTime(secondsPast);
 }
 
 // void wait(unsigned int ticksCount){

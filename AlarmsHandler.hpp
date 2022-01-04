@@ -28,7 +28,7 @@ class AlarmsHandler : public TimeConsumer{
 		bool isAnyActivated() const;
 		
 		void setAlarmOffAfter(uint16_t delayS);
-		const uint16_t& getAlarmOffAfter();
+		const uint16_t& getAlarmOffAfter() const;
 		void disableAlarmAutoOff();
 		
 	private:

@@ -11,6 +11,7 @@
 #include "ButtonsControl.hpp"
 #include "State.hpp"
 #include "AlarmsHandler.hpp"
+#include "LcdLightHandler.hpp"
 
 
 #define TIMER1_DIVIDER 1024
@@ -29,7 +30,7 @@
 #define diodTask TASK_VECTOR[DIOD_TASK]
 #define clockTask TASK_VECTOR[CLOCK_TASK]
 #define displayTask TASK_VECTOR[DISPLAY_TASK]
-#define disableBackLightTask TASK_VECTOR[DISABLE_BACKLIGHT_TASK]
+
 
 
 extern Clock clock;
@@ -43,6 +44,8 @@ extern State* state;
 
 extern AlarmsHandler<TOTAL_ALARMS> alarms;
 
+extern LcdLightHandler lcdLightHandler;
+
 
 //init
 void initState();
@@ -51,8 +54,7 @@ void initState();
 void diodRoutine();
 void timeRoutine();
 void displayRoutine();
-void backlightRoutine();
-void disableAlarmRoutine();
+
 
 
 //1 sec timer1 functional

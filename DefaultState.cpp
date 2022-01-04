@@ -31,8 +31,7 @@ void DefaultState::handleInput(const ButtonEvent& event){
 				printHomePage(true);
 				break;
 			case 1:
-				lcd.backlight();
-				disableBackLightTask.startTimer(BACKLIGHT_DURATION);
+				lcdLightHandler.enableBackLight();
 				break;
 			case 2:
 				setState(StateFactory::createMenuState());

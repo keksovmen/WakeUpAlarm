@@ -110,6 +110,6 @@ void AlarmsHandler<N>::disableAlarmAutoOff(){
 }
 
 template<uint8_t N>
-const uint16_t& AlarmsHandler<N>::getAlarmOffAfter(){
+const uint16_t& AlarmsHandler<N>::getAlarmOffAfter() const{
 	return alarmOffAfterS;
 }
