@@ -37,7 +37,7 @@ void displayTime(const Time& time, bool enableSecunds){
 void displayDate(const Date& date){
 	printZeroPaddedInt(date.day, 2);
 	lcd.print('.');
-	printZeroPaddedInt(date.day, 2);
+	printZeroPaddedInt(date.month, 2);
 	lcd.print('.');
 	printZeroPaddedInt(date.year, 4);
 }

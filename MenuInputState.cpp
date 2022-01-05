@@ -127,7 +127,11 @@ void MenuInputState::lcdShowInput() const {
 	}
 	lcd.setCursor(0, 1);
 	switch(cursorPosition){
-		case 0: case 1:
+		case 0:
+			displayTime(clock.getTime(), true);
+			break;
+		case 1:
+			displayDate(clock.getDate());
 			break;
 		case 2:
 			printZeroPaddedInt(lcdLightHandler.getBackLightDuration(),
