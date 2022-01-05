@@ -2,6 +2,7 @@
 #include "State.hpp"
 #include "LcdPrintFunctions.hpp"
 #include "ProgrammState.hpp"
+#include "Util.hpp"
 
 
 
@@ -108,19 +109,24 @@ void MenuInputState::lcdShowInput() const {
 	strcpy_P(buffer, (PGM_P)pgm_read_word(&MENUS[menuIndex]));
 	lcd.clear();
 	lcd.print(buffer);
+	//alarm number
+	if (cursorPosition >= ALARMS_MENUS_OFFSET){
+		lcd.print(cursorPosition - (ALARMS_MENUS_OFFSET - 1));
+	}
+	lcd.setCursor(0, 1);
 	switch(cursorPosition){
 		case 0: case 1:
 			break;
 		case 2:
-			lcd.setCursor(0, 1);
-			lcd.print(lcdLightHandler.getBackLightDuration());
+			printZeroPaddedInt(lcdLightHandler.getBackLightDuration(),
+								findLongLength(MAX_BACK_LIGHT_DURATION));
 			break;
 		case 3:
-			lcd.setCursor(0, 1);
-			lcd.print(alarms.getAlarmOffAfter());
+			printZeroPaddedInt(alarms.getAlarmOffAfter(),
+								findLongLength(MAX_AUTO_OFF_PERIOD));
 			break;
 		default:
-			lcd.print(cursorPosition - (ALARMS_MENUS_OFFSET - 1));
+			displayTime(alarms.getAlarmTime(cursorPosition - ALARMS_MENUS_OFFSET), true);
 			break;
 	}
 }
