@@ -2,6 +2,24 @@
 #include "ProgrammState.hpp"
 #include "Util.hpp"
 
+
+static void printActiveAlarms(){
+	if (alarms.isAnyActivated()){
+		const int8_t beginning = 15 - (TOTAL_ALARMS - 1);
+		lcd.setCursor(beginning - 1, 1);
+		lcd.print("A");
+		for (int8_t i = 0; i < TOTAL_ALARMS; i ++){
+			if (alarms.isAlarmActivated(i)){
+				lcd.print(i + 1);
+			}else{
+				lcd.setCursor(beginning + i + 1, 1);
+			}
+		}
+	}
+}
+
+
+
 char intToAscii(int8_t digit){
 	return char(48 + digit);
 }
@@ -36,18 +54,10 @@ void printHomePage(bool clear){
 		lcd.clear();
 	}
 	displayDateTime(clock);
-	if (alarms.isAnyActivated()){
-		const int8_t beginning = 15 - (TOTAL_ALARMS - 1);
-		lcd.setCursor(beginning - 1, 1);
-		lcd.print("A");
-		for (int8_t i = 0; i < TOTAL_ALARMS; i ++){
-			if (alarms.isAlarmActivated(i)){
-				lcd.print(i + 1);
-			}else{
-				lcd.setCursor(beginning + i + 1, 1);
-			}
-		}
-	}
+	printActiveAlarms();
+	lcd.setCursor(10, 0);
+	lcd.print(tempHandler.getTemperature());
+	lcd.print('C');
 }
 
 void printZeroPaddedInt(int32_t val, int8_t totalSymbols){

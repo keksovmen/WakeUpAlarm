@@ -27,6 +27,11 @@ void TemperatureSensor::init(){
 	timer.startTimer(0);
 }
 
+void TemperatureSensor::forceMeasure(){
+	timer.startTimer(0);
+	consumeTime(0);
+}
+
 void TemperatureSensor::setTemperaturePeriod(uint8_t period){
 	//write to EEPROM
 	askPeriod = period;

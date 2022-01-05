@@ -6,7 +6,7 @@
 
 
 
-#define ALARMS_MENUS_OFFSET 4
+#define ALARMS_MENUS_OFFSET 5
 
 
 //remember current lcd has 16 symbols on the line
@@ -14,9 +14,10 @@ static const char s0[] PROGMEM = "Set time";
 static const char s1[] PROGMEM = "Set date";
 static const char s2[] PROGMEM = "Set backlight";
 static const char s3[] PROGMEM = "Set off period";
-static const char s4[] PROGMEM = "Set alarm time ";
+static const char s4[] PROGMEM = "Set temp period";
+static const char s5[] PROGMEM = "Set alarm time ";
 
-static PGM_P const MENUS[5] PROGMEM = {s0, s1, s2, s3, s4};
+static PGM_P const MENUS[] PROGMEM = {s0, s1, s2, s3, s4, s5};
 
 
 //cursed but does job
@@ -49,6 +50,11 @@ void setBackLight(const int16_t& s){
 
 void setAlarmOffAfter(const int16_t& s){
 	alarms.setAlarmOffAfter(s);
+	setState(StateFactory::createDefaultState());
+}
+
+void setTemperatureRefreshPeriod(const int16_t& s){
+	tempHandler.setTemperaturePeriod(s);
 	setState(StateFactory::createDefaultState());
 }
 
@@ -86,6 +92,12 @@ void MenuInputState::handleEvent(const ButtonEvent& event){
 							MAX_AUTO_OFF_PERIOD,
 							alarms.getAlarmOffAfter()));
 				return;
+			case 4:
+				setState(StateFactory::createInputIntState(setTemperatureRefreshPeriod,
+							MIN_TEMPERATURE_PERIOD,
+							MAX_TEMPERATURE_PERIOD,
+							tempHandler.getTemperaturePeriod()));
+				return;
 			default:	//for alarms settings
 				selectedAlarmId = cursorPosition - ALARMS_MENUS_OFFSET;
 				setState(StateFactory::createInputTimeState(
@@ -98,7 +110,7 @@ void MenuInputState::handleEvent(const ButtonEvent& event){
 }
 
 int8_t MenuInputState::maxCursorPosition() const {
-	return 3 + TOTAL_ALARMS;
+	return ALARMS_MENUS_OFFSET - 1 + TOTAL_ALARMS;
 }
 
 
@@ -124,6 +136,10 @@ void MenuInputState::lcdShowInput() const {
 		case 3:
 			printZeroPaddedInt(alarms.getAlarmOffAfter(),
 								findLongLength(MAX_AUTO_OFF_PERIOD));
+			break;
+		case 4:
+			printZeroPaddedInt(tempHandler.getTemperaturePeriod(),
+								findLongLength(MAX_TEMPERATURE_PERIOD));
 			break;
 		default:
 			displayTime(alarms.getAlarmTime(cursorPosition - ALARMS_MENUS_OFFSET), true);

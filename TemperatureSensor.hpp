@@ -23,6 +23,7 @@ class TemperatureSensor : public TimeConsumer
 		
 		void consumeTime(int32_t deltaTime) override;
 		void init();
+		void forceMeasure();
 		
 		float getTemperature()const{return temperature;}
 		

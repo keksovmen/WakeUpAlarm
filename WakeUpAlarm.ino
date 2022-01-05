@@ -67,6 +67,7 @@ void tasksLoop(uint8_t secondsPast){
 	}
 	alarms.consumeTime(secondsPast);
 	lcdLightHandler.consumeTime(secondsPast);
+	tempHandler.consumeTime(secondsPast);
 }
 
 // void wait(unsigned int ticksCount){

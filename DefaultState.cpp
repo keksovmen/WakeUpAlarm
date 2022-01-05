@@ -4,12 +4,6 @@
 
 
 
-void printInt(const int16_t& val){
-	Serial.println(val);
-	setState(StateFactory::createDefaultState());
-}
-
-
 
 DefaultState::DefaultState(){
 	lcd.cursor_off();
@@ -37,7 +31,7 @@ void DefaultState::handleEvent(const ButtonEvent& event){
 				setState(StateFactory::createMenuState());
 				break;
 			case 3:
-				setState(StateFactory::createInputIntState(printInt, -40, -999, 9999));
+				tempHandler.forceMeasure();
 				break;
 		}
 	}

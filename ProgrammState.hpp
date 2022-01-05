@@ -12,6 +12,7 @@
 #include "State.hpp"
 #include "AlarmsHandler.hpp"
 #include "LcdLightHandler.hpp"
+#include "TemperatureSensor.hpp"
 
 
 #define TIMER1_DIVIDER 1024
@@ -21,6 +22,7 @@
 
 #define RELE_OUT 13
 #define ALARM_OUT 8
+#define TEMPERATURE_PROBE_PIN 10
 
 #define BUTTONS_COUNT 4
 
@@ -44,6 +46,8 @@ extern State* state;
 extern AlarmsHandler<TOTAL_ALARMS> alarms;
 
 extern LcdLightHandler lcdLightHandler;
+
+extern TemperatureSensor tempHandler;
 
 
 //init

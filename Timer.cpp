@@ -16,6 +16,7 @@ void Timer::consumeTime(int32_t deltaTime){
 void Timer::startTimer(int32_t delay){
 	if (delay == 0){
 		generateEvent();
+		isActivatedFlag = false;
 	}else{
 		remainingDelay = delay;
 		isActivatedFlag = true;

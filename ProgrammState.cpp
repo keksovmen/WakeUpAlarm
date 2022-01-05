@@ -14,10 +14,13 @@ AlarmsHandler<TOTAL_ALARMS> alarms;
 
 LcdLightHandler lcdLightHandler;
 
+TemperatureSensor tempHandler(TEMPERATURE_PROBE_PIN);
+
 
 void initState(){
 	alarms.init();
 	lcdLightHandler.init();
+	tempHandler.init();
 	setState(StateFactory::createDefaultState());
 }
 
