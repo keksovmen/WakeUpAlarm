@@ -8,11 +8,18 @@
 #define MAX_YEAR 9999
 #define SECONDS_IN_DAY 86400L
 
+
+class Time;
+class Date;
+
 /**
 	@param month [1-12]
 **/
 
 int8_t daysInMonth(int8_t month, int16_t year);
+
+void validateAndFixTime(Time& t);
+void validateAndFixDate(Date& d);
 
 
 class Time{

@@ -41,6 +41,26 @@ int8_t daysInMonth(int8_t month, int16_t year){
 }
 
 
+void validateAndFixTime(Time& t){
+	if (t.seconds < 0 || t.seconds > 59 ||
+		t.minutes < 0 || t.minutes > 59 ||
+		t.hours < 0 || t.hours > 23)
+	{
+		t = Time();
+	}
+		
+	
+}
+
+void validateAndFixDate(Date& d){
+	if(d.year < STARTING_YEAR || d.year > MAX_YEAR ||
+		d.month < 1 || d.month > 12 ||
+		d.day < 1 || d.day > daysInMonth(d.month, d.year))
+	{
+		d = Date();
+	}
+}
+
 
 
 //-----------------------Time------------------------------

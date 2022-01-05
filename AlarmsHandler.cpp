@@ -14,6 +14,11 @@ void AlarmsHandler<N>::init(){
 		alarmOffAfterS < MIN_AUTO_OFF_PERIOD){
 			setAlarmOffAfter(DEFAULT_AUTO_OFF_PERIOD);
 	}
+	for (uint8_t i = 0; i < TOTAL_ALARMS; i++){
+		EEPROM.get(ALARMS_TIME_BEGINING_ADDRESS + i * sizeof(Time),
+					alarmsTimes[i]);
+		validateAndFixTime(alarmsTimes[i]);
+	}
 	
 }
 
@@ -77,6 +82,8 @@ void AlarmsHandler<N>::setAlarmTime(const Time& time, uint8_t alarmId){
 		return;
 	}
 	alarmsTimes[alarmId] = time;
+	EEPROM.put(ALARMS_TIME_BEGINING_ADDRESS + alarmId * sizeof(Time),
+				alarmsTimes[alarmId]);
 }
 
 template<uint8_t N>
