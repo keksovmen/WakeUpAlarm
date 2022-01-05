@@ -1,5 +1,7 @@
+#include <EEPROM.h>
 #include "LcdLightHandler.hpp"
 #include "ProgrammState.hpp"
+#include "EepromPositions.h"
 
 
 void LcdLightHandler::handleEvent(const ButtonEvent& event){
@@ -17,8 +19,11 @@ void LcdLightHandler::consumeTime(int32_t deltaTime){
 }
 
 void LcdLightHandler::init(){
-	//read from EEPROM
-	backLightDuration = 10;
+	EEPROM.get(BACK_LIGHT_DURATION_ADDRESS, backLightDuration);
+	if(backLightDuration > MAX_BACK_LIGHT_DURATION ||
+		backLightDuration < MIN_BACK_LIGHT_DURATION){
+			setBackLightDuration(DEFAULT_BACK_LIGHT_DURATION);
+	}
 }
 
 void LcdLightHandler::enableBackLight(){
@@ -27,8 +32,8 @@ void LcdLightHandler::enableBackLight(){
 }
 
 void LcdLightHandler::setBackLightDuration(uint8_t durationS){
-	//write to EEPROM
 	backLightDuration = durationS;
+	EEPROM.put(BACK_LIGHT_DURATION_ADDRESS, backLightDuration);
 }
 
 

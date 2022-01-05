@@ -1,13 +1,20 @@
+#include <EEPROM.h>
 #include "AlarmsHandler.hpp"
 #include "ProgrammState.hpp"
 #include "State.hpp"
+#include "EepromPositions.h"
 
 
 
 template<uint8_t N>
 void AlarmsHandler<N>::init(){
 	//read alarmsTimes from EEPROM
-	alarmOffAfterS = 20;
+	EEPROM.get(ALARM_OFF_AFTER_ADDRESS, alarmOffAfterS);
+	if(alarmOffAfterS > MAX_AUTO_OFF_PERIOD ||
+		alarmOffAfterS < MIN_AUTO_OFF_PERIOD){
+			setAlarmOffAfter(DEFAULT_AUTO_OFF_PERIOD);
+	}
+	
 }
 
 
@@ -100,8 +107,8 @@ bool AlarmsHandler<N>::isAnyActivated() const{
 
 template<uint8_t N>
 void AlarmsHandler<N>::setAlarmOffAfter(uint16_t delayS){
-	//write to EEPROM
 	alarmOffAfterS = delayS;
+	EEPROM.put(ALARM_OFF_AFTER_ADDRESS, alarmOffAfterS);
 }
 
 template<uint8_t N>

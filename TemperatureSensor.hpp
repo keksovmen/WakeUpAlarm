@@ -10,7 +10,8 @@
 #include "Timer.hpp"
 
 #define MIN_TEMPERATURE_PERIOD 1
-#define MAX_TEMPERATURE_PERIOD 60
+#define MAX_TEMPERATURE_PERIOD 240
+#define DEFAULT_TEMPERATURE_PERIOD 60
 
 
 class TemperatureSensor : public TimeConsumer

@@ -11,6 +11,7 @@
 
 #define MIN_BACK_LIGHT_DURATION 3
 #define MAX_BACK_LIGHT_DURATION 60
+#define DEFAULT_BACK_LIGHT_DURATION 10
 
 
 class LcdLightHandler : 
