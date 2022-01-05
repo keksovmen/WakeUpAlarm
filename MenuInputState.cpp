@@ -15,13 +15,9 @@ static const char s2[] PROGMEM = "Set backlight";
 static const char s3[] PROGMEM = "Set off period";
 static const char s4[] PROGMEM = "Set alarm time ";
 
-static const char* const MENUS[5] PROGMEM = {s0, s1, s2, s3, s4};
-// static const char* MENUS[5]={
-						// "Set time",
-						// "Set date",
-						// "Set backlight",
-						// "Set off period",
-						// "Set alarm time "};
+static PGM_P const MENUS[5] PROGMEM = {s0, s1, s2, s3, s4};
+
+
 //cursed but does job
 static uint8_t selectedAlarmId = 0;
 
@@ -107,11 +103,9 @@ int8_t MenuInputState::maxCursorPosition() const {
 
 void MenuInputState::lcdShowInput() const {
 	char buffer[17];
-	if (cursorPosition < ALARMS_MENUS_OFFSET){
-		strcpy_P(buffer, (char*)pgm_read_word(&MENUS[cursorPosition]));
-	}else{
-		strcpy_P(buffer, (char*)pgm_read_word(&MENUS[ALARMS_MENUS_OFFSET]));
-	}
+	const uint8_t menuIndex = cursorPosition < ALARMS_MENUS_OFFSET ?
+							cursorPosition : ALARMS_MENUS_OFFSET;
+	strcpy_P(buffer, (PGM_P)pgm_read_word(&MENUS[menuIndex]));
 	lcd.clear();
 	lcd.print(buffer);
 	switch(cursorPosition){
