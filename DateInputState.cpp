@@ -66,7 +66,7 @@ bool DateInputState::validateInput() {
 }
 
 void DateInputState::lcdShowInput() const {
-	lcd.setCursor(0, 0);
+	lcd.setCursor(0, INPUT_ROW_NUMBER);
 	displayDate(m_val);
 	uint8_t cursorAt = cursorPosition;
 	if (cursorPosition > 1){
@@ -75,5 +75,5 @@ void DateInputState::lcdShowInput() const {
 	if (cursorPosition > 3){
 		cursorAt++;
 	}
-	lcd.setCursor(cursorAt, 0);
+	lcd.setCursor(cursorAt, INPUT_ROW_NUMBER);
 }

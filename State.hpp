@@ -6,6 +6,8 @@
 #include "ButtonsControl.hpp"
 #include "Clock.hpp"
 
+#define INPUT_ROW_NUMBER 1
+
 
 class State;
 class DefaultState;

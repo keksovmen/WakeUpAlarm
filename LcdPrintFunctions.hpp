@@ -23,5 +23,6 @@ void printHomePage(bool clear=false);
 	@param totalSymbols tells how much symbols to display
 **/
 void printZeroPaddedInt(int32_t val, int8_t totalSymbols);
+void printZeroPaddedIntClearRight(int32_t val, int8_t totalSymbols);
 
 #endif

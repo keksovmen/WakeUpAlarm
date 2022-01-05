@@ -40,9 +40,9 @@ bool IntInputState::validateInput() {
 }
 
 void IntInputState::lcdShowInput() const {
-	lcd.clear();
-	lcd.setCursor(0, 1);
-	printZeroPaddedInt(m_val, digitsToRepresent);
+	// lcd.clear();
+	lcd.setCursor(0, INPUT_ROW_NUMBER);
+	printZeroPaddedIntClearRight(m_val, digitsToRepresent);
 	lcd.setCursor(m_val < 0 ? cursorPosition + 1 : cursorPosition,
-					1);
+					INPUT_ROW_NUMBER);
 }

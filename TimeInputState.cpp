@@ -54,7 +54,7 @@ bool TimeInputState::validateInput() {
 }
 
 void TimeInputState::lcdShowInput() const {
-	lcd.setCursor(0, 0);
+	lcd.setCursor(0, INPUT_ROW_NUMBER);
 	displayTime(m_val, true);
 	uint8_t cursorAt = cursorPosition;
 	if (cursorPosition > 1){
@@ -63,5 +63,5 @@ void TimeInputState::lcdShowInput() const {
 	if (cursorPosition > 3){
 		cursorAt++;
 	}
-	lcd.setCursor(cursorAt, 0);
+	lcd.setCursor(cursorAt, INPUT_ROW_NUMBER);
 }

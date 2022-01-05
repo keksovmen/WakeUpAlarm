@@ -5,7 +5,6 @@
 
 CursorInputState::CursorInputState(){
 	displayTask.disable();
-	lcd.clear();
 }
 
 void CursorInputState::handleEvent(const ButtonEvent& event){

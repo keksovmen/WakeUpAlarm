@@ -70,3 +70,9 @@ void printZeroPaddedInt(int32_t val, int8_t totalSymbols){
 	
 	lcd.print(buffer);
 }
+
+//if previously had minus sign, clear last digit of it
+void printZeroPaddedIntClearRight(int32_t val, int8_t totalSymbols){
+	printZeroPaddedInt(val, totalSymbols);
+	lcd.print(' ');
+}
