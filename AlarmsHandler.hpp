@@ -7,7 +7,7 @@
 #include "Clock.hpp"
 
 
-#define TOTAL_ALARMS 2
+#define TOTAL_ALARMS 3
 
 #define MIN_AUTO_OFF_PERIOD 10
 #define MAX_AUTO_OFF_PERIOD 3600

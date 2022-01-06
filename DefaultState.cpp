@@ -16,13 +16,8 @@ void DefaultState::handleEvent(const ButtonEvent& event){
 	if (event.holdMs >= 1000){
 		switch(event.buttonIndex){
 			case 0:
-				if (event.holdMs >= 2000){
-					//for second timer
-					alarms.flipAlarm(1);
-				}else{
-					alarms.flipAlarm(0);
-				}
-				printHomePage(true);
+				alarms.flipAlarm((event.holdMs / 1000) - 1);
+				printHomePage();
 				break;
 			case 1:
 				lcdLightHandler.enableBackLight();

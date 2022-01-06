@@ -4,16 +4,20 @@
 
 
 static void printActiveAlarms(){
+	const int8_t beginning = 15 - (TOTAL_ALARMS - 1);
+	lcd.setCursor(beginning - 1, 1);
 	if (alarms.isAnyActivated()){
-		const int8_t beginning = 15 - (TOTAL_ALARMS - 1);
-		lcd.setCursor(beginning - 1, 1);
 		lcd.print("A");
 		for (int8_t i = 0; i < TOTAL_ALARMS; i ++){
 			if (alarms.isAlarmActivated(i)){
 				lcd.print(i + 1);
 			}else{
-				lcd.setCursor(beginning + i + 1, 1);
+				lcd.print(" ");
 			}
+		}
+	}else{
+		for (int8_t i = 0; i < TOTAL_ALARMS + 1; i++){
+			lcd.print(" ");
 		}
 	}
 }
