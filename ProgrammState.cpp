@@ -1,10 +1,13 @@
+#include <EEPROM.h>
 #include "ProgrammState.hpp"
+#include "EepromPositions.h"
 
 Clock clock;
 LiquidCrystal_I2C lcd(0x27, 16, 2);
 Task TASK_VECTOR[TASK_VECTOR_SIZE] = {
 							Task(diodRoutine),
-							Task(displayRoutine)
+							Task(displayRoutine),
+							Task(autoSaveDate)
 							};
 ButtonsControl<BUTTONS_COUNT> buttons;
 
@@ -20,6 +23,11 @@ AudioHandler audioHandler(AUDIO_PIN);
 
 
 void initState(){
+	Date d;
+	EEPROM.get(DATE_ADDRESS, d);
+	validateAndFixDate(d);
+	clock.setDate(d);
+	
 	alarms.init();
 	lcdLightHandler.init();
 	tempHandler.init();
@@ -32,5 +40,10 @@ void setState(State* s){
 
 State* getState(){
 	return state;
+}
+
+void setCurrentDate(const Date& d){
+	clock.setDate(d);
+	autoSaveDate();
 }
 

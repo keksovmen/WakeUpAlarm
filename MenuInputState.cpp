@@ -31,7 +31,7 @@ void setTime(const Time& t){
 }
 
 void setDate(const Date& d){
-	clock.setDate(d);
+	setCurrentDate(d);
 	// DEBUG
 	Serial.print("Current day ");
 	Serial.println(clock.getDate().currentDay);

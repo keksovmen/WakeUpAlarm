@@ -33,6 +33,7 @@
 
 #define diodTask TASK_VECTOR[DIOD_TASK]
 #define displayTask TASK_VECTOR[DISPLAY_TASK]
+#define dateAutoSaveTask TASK_VECTOR[DATE_AUTO_SAVE]
 
 
 
@@ -60,6 +61,7 @@ void initState();
 //task routines 
 void diodRoutine();
 void displayRoutine();
+void autoSaveDate();
 
 
 
@@ -76,6 +78,7 @@ void initInputButtons();
 void setState(State* s);
 State* getState();
 
-
+//for writing to EEPROM
+void setCurrentDate(const Date& d);
 
 #endif

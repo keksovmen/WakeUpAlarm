@@ -1,8 +1,6 @@
 #ifndef EEPROM_POSITIONS_H
 #define EEPROM_POSITIONS_H
 
-#include <avr/eeprom.h>
-
 
 #define ALARM_OFF_AFTER_ADDRESS 0
 #define BACK_LIGHT_DURATION_ADDRESS 2
