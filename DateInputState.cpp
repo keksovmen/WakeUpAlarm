@@ -10,8 +10,8 @@ DateInputState::DateInputState(void (*consumer)(const Date& val),
 	lcdShowInput();
 }
 
-int16_t DateInputState::getChange(const ButtonEvent& event) const{
-	int16_t result = 0;
+int32_t DateInputState::getChange(const ButtonEvent& event) const{
+	int32_t result = 0;
 	if(event.buttonIndex == 0){
 		//up
 		result = 1;
@@ -37,7 +37,7 @@ int8_t DateInputState::maxCursorPosition() const{
 	return 7;
 }
 
-void DateInputState::applyChange(int16_t change, int8_t cursorPosition){
+void DateInputState::applyChange(int32_t change, int8_t cursorPosition){
 	switch(cursorPosition){
 		case 0: case 1:
 			m_val.day += change;

@@ -4,19 +4,19 @@
 #include "Util.hpp"
 
 
-IntInputState::IntInputState(void (*consumer)(const int16_t& val),
-						const int16_t& initialValue,
-						int16_t minVal,
-						int16_t maxVal)
-	: InputState<int16_t>(consumer, initialValue),
+IntInputState::IntInputState(void (*consumer)(const int32_t& val),
+						const int32_t& initialValue,
+						int32_t minVal,
+						int32_t maxVal)
+	: InputState<int32_t>(consumer, initialValue),
 		minVal(minVal), maxVal(maxVal),
 		digitsToRepresent(findLongLength(maxVal))
 {
 	lcdShowInput();
 }
 
-int16_t IntInputState::getChange(const ButtonEvent& event) const{
-	int16_t result = 0;
+int32_t IntInputState::getChange(const ButtonEvent& event) const{
+	int32_t result = 0;
 	if (event.buttonIndex == 0){
 		//up
 		result = 1;
@@ -31,7 +31,7 @@ int8_t IntInputState::maxCursorPosition() const{
 	return digitsToRepresent - 1;
 }
 
-void IntInputState::applyChange(int16_t change, int8_t cursorPosition){
+void IntInputState::applyChange(int32_t change, int8_t cursorPosition){
 	m_val += change;
 }
 

@@ -10,8 +10,8 @@ TimeInputState::TimeInputState(void (*consumer)(const Time& t),
 	lcdShowInput();
 }
 
-int16_t TimeInputState::getChange(const ButtonEvent& event) const{
-	int16_t result = 0;
+int32_t TimeInputState::getChange(const ButtonEvent& event) const{
+	int32_t result = 0;
 	if(event.buttonIndex == 0){
 		//up
 		result = 1;
@@ -29,7 +29,7 @@ int8_t TimeInputState::maxCursorPosition() const{
 	return 5;
 }
 
-void TimeInputState::applyChange(int16_t change, int8_t cursorPosition){
+void TimeInputState::applyChange(int32_t change, int8_t cursorPosition){
 	switch(cursorPosition){
 		case 0: case 1:
 			m_val.hours += change;

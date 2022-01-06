@@ -81,8 +81,8 @@ class InputState : public CursorInputState{
 	protected:
 		T m_val;
 		
-		virtual int16_t getChange(const ButtonEvent& event) const = 0;
-		virtual void applyChange(int16_t change, int8_t cursorPosition) = 0;
+		virtual int32_t getChange(const ButtonEvent& event) const = 0;
+		virtual void applyChange(int32_t change, int8_t cursorPosition) = 0;
 		virtual bool validateInput() = 0;
 	
 	private:
@@ -96,9 +96,9 @@ class TimeInputState : public InputState<Time>{
 						const Time& initialValue);
 	
 	protected:
-		int16_t getChange(const ButtonEvent& event) const override;
+		int32_t getChange(const ButtonEvent& event) const override;
 		int8_t maxCursorPosition() const override;
-		void applyChange(int16_t change, int8_t cursorPosition) override;
+		void applyChange(int32_t change, int8_t cursorPosition) override;
 		bool validateInput() override;
 		void lcdShowInput() const override;
 };
@@ -109,30 +109,30 @@ class DateInputState : public InputState<Date>{
 		DateInputState(void (*consumer)(const Date& val),
 						const Date& initialValue);
 	protected:
-		int16_t getChange(const ButtonEvent& event) const override;
+		int32_t getChange(const ButtonEvent& event) const override;
 		int8_t maxCursorPosition() const override;
-		void applyChange(int16_t change, int8_t cursorPosition) override;
+		void applyChange(int32_t change, int8_t cursorPosition) override;
 		bool validateInput() override;
 		void lcdShowInput() const override;
 };
 
 
 //TODO: instead of 16 bit int use 32 bit, require changes in InputState
-class IntInputState : public InputState<int16_t>{
+class IntInputState : public InputState<int32_t>{
 	public:
-		IntInputState(void (*consumer)(const int16_t& val),
-						const int16_t& initialValue,
-						int16_t minVal, 
-						int16_t maxVal
+		IntInputState(void (*consumer)(const int32_t& val),
+						const int32_t& initialValue,
+						int32_t minVal, 
+						int32_t maxVal
 						);
 	protected:
-		const int16_t minVal;
-		const int16_t maxVal;
+		const int32_t minVal;
+		const int32_t maxVal;
 		const int8_t digitsToRepresent;
 	
-		int16_t getChange(const ButtonEvent& event) const override;
+		int32_t getChange(const ButtonEvent& event) const override;
 		int8_t maxCursorPosition() const override;
-		void applyChange(int16_t change, int8_t cursorPosition) override;
+		void applyChange(int32_t change, int8_t cursorPosition) override;
 		bool validateInput() override;
 		void lcdShowInput() const override;
 };
@@ -154,17 +154,17 @@ class StateFactory{
 									const Time& initialValue);
 		static State* createInputDateState(void (*consumer)(const Date& val),
 									const Date& initialValue);
-		static State* createInputIntState(void (*consumer)(const int16_t& val),
-									int16_t minVal, 
-									int16_t maxVal, 
-									int16_t initialValue);
+		static State* createInputIntState(void (*consumer)(const int32_t& val),
+									int32_t minVal, 
+									int32_t maxVal, 
+									int32_t initialValue);
 		static State* createAlarmState(uint8_t alarmId);
 };
 
 
-
-template class InputState<Date>;
 template class InputState<Time>;
-template class InputState<int16_t>;
+template class InputState<Date>;
+template class InputState<int32_t>;
+
 
 #endif

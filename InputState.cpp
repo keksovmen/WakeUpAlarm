@@ -22,7 +22,7 @@ void InputState<T>::handleEvent(const ButtonEvent& event){
 		consumer(m_val);
 		return;
 	}
-	int16_t change = getChange(event);
+	int32_t change = getChange(event);
 	applyChange(change, cursorPosition);
 	if (!validateInput()){
 		applyChange(-change, cursorPosition);

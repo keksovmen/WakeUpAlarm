@@ -44,22 +44,22 @@ void setSelectedAlarmTime(const Time& t){
 	setState(StateFactory::createDefaultState());
 }
 
-void setBackLight(const int16_t& s){
+void setBackLight(const int32_t& s){
 	lcdLightHandler.setBackLightDuration(s);
 	setState(StateFactory::createDefaultState());
 }
 
-void setAlarmOffAfter(const int16_t& s){
+void setAlarmOffAfter(const int32_t& s){
 	alarms.setAlarmOffAfter(s);
 	setState(StateFactory::createDefaultState());
 }
 
-void setTemperatureRefreshPeriod(const int16_t& s){
+void setTemperatureRefreshPeriod(const int32_t& s){
 	tempHandler.setTemperaturePeriod(s);
 	setState(StateFactory::createDefaultState());
 }
 
-void setAudioDelay(const int16_t& s){
+void setAudioDelay(const int32_t& s){
 	alarms.setAudioDelay(s);
 	setState(StateFactory::createDefaultState());
 }

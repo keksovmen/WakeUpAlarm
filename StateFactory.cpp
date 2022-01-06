@@ -25,10 +25,10 @@ State* StateFactory::createInputDateState(void (*consumer)(const Date& val),
 	return new(stateStorage)DateInputState(consumer, initialValue);
 }
 
-State* StateFactory::createInputIntState(void (*consumer)(const int16_t& val),
-										int16_t minVal, 
-										int16_t maxVal, 
-										int16_t initialValue)
+State* StateFactory::createInputIntState(void (*consumer)(const int32_t& val),
+										int32_t minVal, 
+										int32_t maxVal, 
+										int32_t initialValue)
 {
 	return new(stateStorage)IntInputState(consumer,
 								initialValue, minVal, maxVal);
