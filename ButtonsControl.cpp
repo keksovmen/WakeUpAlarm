@@ -79,8 +79,9 @@ static void enableClock(void){
 	TCNT2 = 0;
 	TCCR2A = (1 << WGM21);
 	TCCR2B = (1 << CS20)|(1 << CS21)|(1 << CS22);
-	OCR2A = BOUNDARY;
-	TIMSK2 = (1 << OCIE2A);
+	OCR2A = BOUNDARY;	//for some reason if not set COMPB won't work
+	OCR2B = BOUNDARY;
+	TIMSK2 = (1 << OCIE2B);
 	sei();
 }
 
@@ -91,6 +92,6 @@ static void disableClock(void){
 	SREG = oldSREG;
 }
 
-ISR(TIMER2_COMPA_vect){
+ISR(TIMER2_COMPB_vect){
 	ticks++;
 }

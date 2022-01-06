@@ -16,6 +16,8 @@ LcdLightHandler lcdLightHandler;
 
 TemperatureSensor tempHandler(TEMPERATURE_PROBE_PIN);
 
+AudioHandler audioHandler(AUDIO_PIN);
+
 
 void initState(){
 	alarms.init();

@@ -56,6 +56,7 @@ void loop(void){
 		lcdLightHandler.handleEvent(event);
 		getState()->handleEvent(event);
 	}
+	audioHandler.doActions();
 }
 
 

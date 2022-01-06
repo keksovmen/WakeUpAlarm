@@ -13,6 +13,7 @@
 #include "AlarmsHandler.hpp"
 #include "LcdLightHandler.hpp"
 #include "TemperatureSensor.hpp"
+#include "AudioHandler.hpp"
 
 
 #define TIMER1_DIVIDER 1024
@@ -23,6 +24,7 @@
 #define RELE_OUT 13
 #define ALARM_OUT 8
 #define TEMPERATURE_PROBE_PIN 10
+#define AUDIO_PIN 9
 
 #define BUTTONS_COUNT 4
 
@@ -48,6 +50,8 @@ extern AlarmsHandler<TOTAL_ALARMS> alarms;
 extern LcdLightHandler lcdLightHandler;
 
 extern TemperatureSensor tempHandler;
+
+extern AudioHandler audioHandler;
 
 
 //init
