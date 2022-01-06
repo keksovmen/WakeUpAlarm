@@ -13,10 +13,8 @@ AlarmState::AlarmState(uint8_t alarmId)
 }
 
 void AlarmState::handleEvent(const ButtonEvent& event){
-	if (event.holdMs >= 1000){
-		digitalWrite(ALARM_OUT, LOW);
-		alarms.disableAlarmAutoOff();
-		audioHandler.deactivate();
-		setState(StateFactory::createDefaultState());
-	}
+	digitalWrite(ALARM_OUT, LOW);
+	alarms.disableAlarmAutoOff();
+	audioHandler.deactivate();
+	setState(StateFactory::createDefaultState());
 }
