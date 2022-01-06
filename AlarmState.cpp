@@ -10,7 +10,6 @@ AlarmState::AlarmState(uint8_t alarmId)
 	lcd.cursor_off();
 	lcd.clear();
 	displayTask.startTimer(0);
-	audioHandler.activate();
 }
 
 void AlarmState::handleEvent(const ButtonEvent& event){

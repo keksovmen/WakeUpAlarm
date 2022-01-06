@@ -12,14 +12,19 @@ void AlarmsHandler<N>::init(){
 	EEPROM.get(ALARM_OFF_AFTER_ADDRESS, alarmOffAfterS);
 	if(alarmOffAfterS > MAX_AUTO_OFF_PERIOD ||
 		alarmOffAfterS < MIN_AUTO_OFF_PERIOD){
-			setAlarmOffAfter(DEFAULT_AUTO_OFF_PERIOD);
+			alarmOffAfterS = DEFAULT_AUTO_OFF_PERIOD;
+			// setAlarmOffAfter(DEFAULT_AUTO_OFF_PERIOD);
+	}
+	EEPROM.get(AUDIO_DELAY_ADDRESS, audioDelayS);
+	if (audioDelayS > MAX_AUDIO_DELAY ||
+		audioDelayS < MIN_AUDIO_DELAY){
+			audioDelayS = DEFAULT_AUDIO_DELAY;
 	}
 	for (uint8_t i = 0; i < TOTAL_ALARMS; i++){
 		EEPROM.get(ALARMS_TIME_BEGINING_ADDRESS + i * sizeof(Time),
 					alarmsTimes[i]);
 		validateAndFixTime(alarmsTimes[i]);
 	}
-	
 }
 
 
@@ -30,6 +35,7 @@ void AlarmsHandler<N>::consumeTime(int32_t deltaTime){
 		if(alarmsTimers[i].eventReady()){
 			alarmsTimers[i].consumeEvent();
 			alarmOffTimer.startTimer(alarmOffAfterS + deltaTime);
+			audioDelayTimer.startTimer(audioDelayS + deltaTime);
 			setState(StateFactory::createAlarmState(i));
 		}
 	}
@@ -38,6 +44,11 @@ void AlarmsHandler<N>::consumeTime(int32_t deltaTime){
 		alarmOffTimer.consumeEvent();
 		//turn off alarm
 		getState()->handleEvent(ButtonEvent(0, 1000));
+	}
+	audioDelayTimer.consumeTime(deltaTime);
+	if (audioDelayTimer.eventReady()){
+		audioDelayTimer.consumeEvent();
+		audioHandler.activate();
 	}
 }
 
@@ -77,7 +88,6 @@ void AlarmsHandler<N>::flipAlarm(uint8_t alarmId){
 
 template<uint8_t N>
 void AlarmsHandler<N>::setAlarmTime(const Time& time, uint8_t alarmId){
-	//write to EEPROM
 	if(alarmId >= N){
 		return;
 	}
@@ -121,9 +131,21 @@ void AlarmsHandler<N>::setAlarmOffAfter(uint16_t delayS){
 template<uint8_t N>
 void AlarmsHandler<N>::disableAlarmAutoOff(){
 	alarmOffTimer.disable();
+	audioDelayTimer.disable();
 }
 
 template<uint8_t N>
 const uint16_t& AlarmsHandler<N>::getAlarmOffAfter() const{
 	return alarmOffAfterS;
+}
+
+template<uint8_t N>
+void AlarmsHandler<N>::setAudioDelay(uint16_t delayS){
+	audioDelayS = delayS;
+	EEPROM.put(AUDIO_DELAY_ADDRESS, audioDelayS);
+}
+
+template<uint8_t N>
+const uint16_t& AlarmsHandler<N>::getAudioDelay() const{
+	return audioDelayS;
 }

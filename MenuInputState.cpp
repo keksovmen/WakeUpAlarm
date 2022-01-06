@@ -6,7 +6,7 @@
 
 
 
-#define ALARMS_MENUS_OFFSET 5
+#define ALARMS_MENUS_OFFSET 6
 
 
 //remember current lcd has 16 symbols on the line
@@ -15,9 +15,10 @@ static const char s1[] PROGMEM = "Set date";
 static const char s2[] PROGMEM = "Set backlight";
 static const char s3[] PROGMEM = "Set off period";
 static const char s4[] PROGMEM = "Set temp period";
-static const char s5[] PROGMEM = "Set alarm time ";
+static const char s5[] PROGMEM = "Set audio delay";
+static const char s6[] PROGMEM = "Set alarm time ";
 
-static PGM_P const MENUS[] PROGMEM = {s0, s1, s2, s3, s4, s5};
+static PGM_P const MENUS[] PROGMEM = {s0, s1, s2, s3, s4, s5, s6};
 
 
 //cursed but does job
@@ -58,6 +59,10 @@ void setTemperatureRefreshPeriod(const int16_t& s){
 	setState(StateFactory::createDefaultState());
 }
 
+void setAudioDelay(const int16_t& s){
+	alarms.setAudioDelay(s);
+	setState(StateFactory::createDefaultState());
+}
 
 
 
@@ -75,28 +80,42 @@ void MenuInputState::handleEvent(const ButtonEvent& event){
 		//select
 		switch(cursorPosition){
 			case 0:
-				setState(StateFactory::createInputTimeState(setTime, clock.getTime()));
+				setState(StateFactory::createInputTimeState(
+							setTime,
+							clock.getTime()));
 				return;
 			case 1:
-				setState(StateFactory::createInputDateState(setDate, clock.getDate()));
+				setState(StateFactory::createInputDateState(
+							setDate,
+							clock.getDate()));
 				return;
 			case 2:
-				setState(StateFactory::createInputIntState(setBackLight,
+				setState(StateFactory::createInputIntState(
+							setBackLight,
 							MIN_BACK_LIGHT_DURATION,
 							MAX_BACK_LIGHT_DURATION,
 							lcdLightHandler.getBackLightDuration()));
 				return;
 			case 3:
-				setState(StateFactory::createInputIntState(setAlarmOffAfter,
+				setState(StateFactory::createInputIntState(
+							setAlarmOffAfter,
 							MIN_AUTO_OFF_PERIOD,
 							MAX_AUTO_OFF_PERIOD,
 							alarms.getAlarmOffAfter()));
 				return;
 			case 4:
-				setState(StateFactory::createInputIntState(setTemperatureRefreshPeriod,
+				setState(StateFactory::createInputIntState(
+							setTemperatureRefreshPeriod,
 							MIN_TEMPERATURE_PERIOD,
 							MAX_TEMPERATURE_PERIOD,
 							tempHandler.getTemperaturePeriod()));
+				return;
+			case 5:
+				setState(StateFactory::createInputIntState(
+							setAudioDelay,
+							MIN_AUDIO_DELAY,
+							MAX_AUDIO_DELAY,
+							alarms.getAudioDelay()));
 				return;
 			default:	//for alarms settings
 				selectedAlarmId = cursorPosition - ALARMS_MENUS_OFFSET;
@@ -144,6 +163,10 @@ void MenuInputState::lcdShowInput() const {
 		case 4:
 			printZeroPaddedInt(tempHandler.getTemperaturePeriod(),
 								findLongLength(MAX_TEMPERATURE_PERIOD));
+			break;
+		case 5:
+			printZeroPaddedInt(alarms.getAudioDelay(),
+								findLongLength(MAX_AUDIO_DELAY - MIN_AUDIO_DELAY));
 			break;
 		default:
 			displayTime(alarms.getAlarmTime(cursorPosition - ALARMS_MENUS_OFFSET), true);

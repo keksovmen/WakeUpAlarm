@@ -8,9 +8,14 @@
 
 
 #define TOTAL_ALARMS 2
+
 #define MIN_AUTO_OFF_PERIOD 10
 #define MAX_AUTO_OFF_PERIOD 3600
 #define DEFAULT_AUTO_OFF_PERIOD 300
+
+#define MIN_AUDIO_DELAY 0
+#define MAX_AUDIO_DELAY MAX_AUTO_OFF_PERIOD - MIN_AUTO_OFF_PERIOD
+#define DEFAULT_AUDIO_DELAY 5
 
 
 template<uint8_t N>
@@ -33,12 +38,18 @@ class AlarmsHandler : public TimeConsumer{
 		const uint16_t& getAlarmOffAfter() const;
 		void disableAlarmAutoOff();
 		
+		void setAudioDelay(uint16_t delayS);
+		const uint16_t& getAudioDelay() const;
+		
 	private:
 		Timer alarmsTimers[N];
 		Time alarmsTimes[N];
 		
 		Timer alarmOffTimer;
 		uint16_t alarmOffAfterS;
+		
+		Timer audioDelayTimer;
+		uint16_t audioDelayS;
 };
 
 
