@@ -98,7 +98,7 @@ bool Time::addHour(){
 }
 
 int32_t Time::toSeconds() const{
-	return hours * 3600L + minutes * 60 + seconds;
+	return hours * 3600L + minutes * 60L + seconds;
 }
 
 int32_t Time::diff(const Time& t) const{

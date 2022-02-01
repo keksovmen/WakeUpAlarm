@@ -59,7 +59,7 @@ void AlarmsHandler<N>::activateAlarm(uint8_t alarmId){
 	}
 	int32_t diff = alarmsTimes[alarmId].diff(clock.getTime());
 	if (diff <= 0){
-		diff = abs(diff) + SECONDS_IN_DAY;
+		diff = diff + SECONDS_IN_DAY;
 	}
 	// DEBUG
 	Serial.println(diff);
