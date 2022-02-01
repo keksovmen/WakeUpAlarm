@@ -7,7 +7,7 @@
 static bool output = false;
 
 void diodRoutine(){
-	digitalWrite(RELE_OUT, output);
+	digitalWrite(DIOD_BLINK_PIN, output);
 	output = !output;
 	diodTask.startTimer(1);
 }
@@ -17,7 +17,7 @@ void displayRoutine(){
 	displayTask.startTimer(1);
 }
 
-void autoSaveDate(){
+void autoSaveDateRoutine(){
 	EEPROM.put(DATE_ADDRESS, clock.getDate());
 	Clock tmp;
 	tmp.setDate(clock.getDate());

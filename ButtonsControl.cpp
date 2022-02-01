@@ -71,6 +71,23 @@ ButtonEvent ButtonsControl<N>::getEvent() const{
 	return button;
 }
 
+
+//------------------ThresholdButtonsControl----------------------
+
+template<uint8_t N>
+ThresholdButtonsControl<N>::ThresholdButtonsControl(uint16_t minHoldMs) :
+	ButtonsControl<N>(), minHoldDurationMs(minHoldMs)
+{
+}
+
+template<uint8_t N>
+void ThresholdButtonsControl<N>::generateEvent(){
+	if (this->button.holdMs > minHoldDurationMs){
+		ButtonsControl<N>::generateEvent();
+	}
+}
+
+
 //------------------------------------
 
 static void enableClock(void){

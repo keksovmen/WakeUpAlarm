@@ -8,17 +8,14 @@
 #include "LcdPrintFunctions.hpp"
 
 
-// #define AUDIO_OUT 9
-
-
 
 
 
 void setup(void){
-	pinMode(RELE_OUT, OUTPUT);
-	pinMode(ALARM_OUT, OUTPUT);
-	digitalWrite(RELE_OUT, LOW);
-	digitalWrite(ALARM_OUT, LOW);
+	pinMode(DIOD_BLINK_PIN, OUTPUT);
+	pinMode(ALARM_RELE_PIN, OUTPUT);
+	digitalWrite(DIOD_BLINK_PIN, LOW);
+	digitalWrite(ALARM_RELE_PIN, LOW);
 	
 	Serial.begin(9600);
 	Serial.println("Starting");
@@ -26,18 +23,15 @@ void setup(void){
 	
 	lcd.init();
 	//DEBUG
-	lcd.backlight();
 	
 	
-	initState();
+	initProgramState();
 	initInputButtons();
 	initRealTimeTimer();
 	
-	diodTask.startTimer(0);
+	// diodTask.startTimer(0);
 	displayTask.startTimer(0);
-
-	// tone(AUDIO_OUT, 1000);
-
+	dateAutoSaveTask.startTimer(0);
 }
 
 void loop(void){

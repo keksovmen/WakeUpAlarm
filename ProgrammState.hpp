@@ -20,15 +20,18 @@
 #define TIMER1_DIVIDER_REGISTER_VAL 0x05
 #define TICKS_1S F_CPU / TIMER1_DIVIDER
 
-
-#define RELE_OUT 13
-#define ALARM_OUT 8
+//pin out
+#define DIOD_BLINK_PIN 13
+#define ALARM_RELE_PIN 8
 #define TEMPERATURE_PROBE_PIN 10
 #define AUDIO_PIN 9
 
+//total buttons to allocate space
 #define BUTTONS_COUNT 4
+//what hold duration is minimal to accept in millis
+#define THRESHOLD 50u
 
-
+//task declarations
 #define TASK_VECTOR taskVector
 
 #define diodTask TASK_VECTOR[DIOD_TASK]
@@ -36,32 +39,26 @@
 #define dateAutoSaveTask TASK_VECTOR[DATE_AUTO_SAVE]
 
 
-
-extern Clock clock;
 extern LiquidCrystal_I2C lcd;
 
+extern Clock clock;
+extern ThresholdButtonsControl<BUTTONS_COUNT> buttons;
 extern Task TASK_VECTOR[TASK_VECTOR_SIZE];
-									
-extern ButtonsControl<BUTTONS_COUNT> buttons;
-
+extern AlarmsHandler<TOTAL_ALARMS> alarms;
+extern LcdLightHandler lcdLightHandler;
+extern TemperatureSensor tempHandler;
+extern AudioHandler audioHandler;
 extern State* state;
 
-extern AlarmsHandler<TOTAL_ALARMS> alarms;
-
-extern LcdLightHandler lcdLightHandler;
-
-extern TemperatureSensor tempHandler;
-
-extern AudioHandler audioHandler;
 
 
-//init
-void initState();
+//init extern fields
+void initProgramState();
 
 //task routines 
 void diodRoutine();
 void displayRoutine();
-void autoSaveDate();
+void autoSaveDateRoutine();
 
 
 
@@ -80,5 +77,6 @@ State* getState();
 
 //for writing to EEPROM
 void setCurrentDate(const Date& d);
+void setCurrentTime(const Time& t);
 
 #endif

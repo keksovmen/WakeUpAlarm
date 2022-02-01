@@ -6,7 +6,7 @@
 	
 **/
 
-void checkInput(){
+static void checkInput(){
 	uint8_t state = PIND & 0xF0;
 	if (state != 0xF0){
 		if ((state & 0x10) == 0){

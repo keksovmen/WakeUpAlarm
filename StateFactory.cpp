@@ -1,7 +1,7 @@
 #include <New.h>
 #include "State.hpp"
 
-static char stateStorage[13];
+static char stateStorage[18];
 
 
 State* StateFactory::createDefaultState()

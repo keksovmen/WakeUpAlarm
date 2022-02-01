@@ -26,7 +26,7 @@ static uint8_t selectedAlarmId = 0;
 
 
 void setTime(const Time& t){
-	clock.setTime(t);
+	setCurrentTime(t);
 	setState(StateFactory::createDefaultState());
 }
 

@@ -6,7 +6,7 @@
 class ConsumableEvent{
 	public:
 		void consumeEvent(){eventFlag = false;}
-		void generateEvent(){eventFlag = true;}
+		virtual void generateEvent(){eventFlag = true;}
 		bool eventReady() const{return eventFlag;}
 	private:
 		bool eventFlag = false;

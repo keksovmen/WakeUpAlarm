@@ -2,32 +2,40 @@
 #include "ProgrammState.hpp"
 #include "EepromPositions.h"
 
+#define LCD_I2C_ADDRESS 0x27
+#define LCD_TOTAL_COLUMNS 16
+#define LCD_TOTAL_ROWS 2
+
+
+
+LiquidCrystal_I2C lcd(LCD_I2C_ADDRESS,
+						LCD_TOTAL_COLUMNS,
+						LCD_TOTAL_ROWS);
+
 Clock clock;
-LiquidCrystal_I2C lcd(0x27, 16, 2);
+ThresholdButtonsControl<BUTTONS_COUNT> buttons(THRESHOLD);
 Task TASK_VECTOR[TASK_VECTOR_SIZE] = {
 							Task(diodRoutine),
 							Task(displayRoutine),
-							Task(autoSaveDate)
+							Task(autoSaveDateRoutine)
 							};
-ButtonsControl<BUTTONS_COUNT> buttons;
-
+AlarmsHandler<TOTAL_ALARMS> alarms;
+LcdLightHandler lcdLightHandler;
+TemperatureSensor tempHandler(TEMPERATURE_PROBE_PIN);
+AudioHandler audioHandler(AUDIO_PIN);
 State* state = nullptr;
 
-AlarmsHandler<TOTAL_ALARMS> alarms;
 
-LcdLightHandler lcdLightHandler;
-
-TemperatureSensor tempHandler(TEMPERATURE_PROBE_PIN);
-
-AudioHandler audioHandler(AUDIO_PIN);
-
-
-void initState(){
+static Date readDateFromEEPROM(){
 	Date d;
 	EEPROM.get(DATE_ADDRESS, d);
 	validateAndFixDate(d);
-	clock.setDate(d);
-	
+	return d;
+}
+
+
+void initProgramState(){
+	clock.setDate(readDateFromEEPROM());
 	alarms.init();
 	lcdLightHandler.init();
 	tempHandler.init();
@@ -44,6 +52,10 @@ State* getState(){
 
 void setCurrentDate(const Date& d){
 	clock.setDate(d);
-	autoSaveDate();
+	autoSaveDateRoutine();
 }
 
+void setCurrentTime(const Time& t){
+	clock.setTime(t);
+	autoSaveDateRoutine();
+}

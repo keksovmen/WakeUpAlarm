@@ -1,0 +1,5 @@
+When trying to increment audio delay by 1000 it not changing with current settings.
+For some reason treated each button as it was button 3, possible 3 is default in switch statement
+When displaying temperature if it less than 10 degrees, last symbol in line starts flikiring from C to Black
+Fucking alarm didn't work set at 9:45 started on 16.01.2022 at 23:30
+After some turning on and off alarm it won't work but symbol that it is active will present

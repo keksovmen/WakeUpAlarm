@@ -6,14 +6,14 @@
 AlarmState::AlarmState(uint8_t alarmId)
 	: alarmId(alarmId)
 {
-	digitalWrite(ALARM_OUT, HIGH);
+	digitalWrite(ALARM_RELE_PIN, HIGH);
 	lcd.cursor_off();
 	lcd.clear();
 	displayTask.startTimer(0);
 }
 
 void AlarmState::handleEvent(const ButtonEvent& event){
-	digitalWrite(ALARM_OUT, LOW);
+	digitalWrite(ALARM_RELE_PIN, LOW);
 	alarms.disableAlarmAutoOff();
 	audioHandler.deactivate();
 	setState(StateFactory::createDefaultState());

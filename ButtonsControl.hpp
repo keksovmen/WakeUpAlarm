@@ -6,6 +6,7 @@
 #include "ConsumableEvent.hpp"
 
 
+
 struct ButtonEvent{
 	ButtonEvent(uint8_t buttonIndex=0, uint16_t durationMs=0) :
 		buttonIndex(buttonIndex), holdMs(durationMs){};
@@ -25,12 +26,25 @@ class ButtonsControl : public ConsumableEvent{
 
 		ButtonEvent getEvent() const;
 		
-	private:
+	protected:
 		bool states[N];
 		ButtonEvent button;
 		bool activated = false;
 };
 
+template<uint8_t N>
+class ThresholdButtonsControl : public ButtonsControl<N>
+{
+	public:
+		ThresholdButtonsControl(uint16_t minHoldMs);
+		void generateEvent() override;
+		
+	private:
+		const uint16_t minHoldDurationMs;
+};
+
+
 template class ButtonsControl<4>;
+template class ThresholdButtonsControl<4>;
 
 #endif
