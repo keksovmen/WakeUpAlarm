@@ -1,4 +1,3 @@
 When displaying temperature if it less than 10 degrees, last symbol in line starts flikiring from C to Black
 Add another display screen, where time until alarm is drawn
 Create temperature log for last n hours to check the dynamic
-When alarm is on and you change data/time you must recalculate time until alarm

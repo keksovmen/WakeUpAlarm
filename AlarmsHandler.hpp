@@ -21,6 +21,7 @@
 template<uint8_t N>
 class AlarmsHandler : public TimeConsumer{
 	public:
+		AlarmsHandler(const Time& currentTime);
 		void consumeTime(int32_t deltaTime) override;
 		
 		void init();
@@ -41,7 +42,11 @@ class AlarmsHandler : public TimeConsumer{
 		void setAudioDelay(uint16_t delayS);
 		const uint16_t& getAudioDelay() const;
 		
+		void updateAlarmTimers();
+		
 	private:
+		const Time& currentTime;
+		
 		Timer alarmsTimers[N];
 		Time alarmsTimes[N];
 		

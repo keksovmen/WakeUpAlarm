@@ -19,7 +19,7 @@ Task TASK_VECTOR[TASK_VECTOR_SIZE] = {
 							Task(displayRoutine),
 							Task(autoSaveDateRoutine)
 							};
-AlarmsHandler<TOTAL_ALARMS> alarms;
+AlarmsHandler<TOTAL_ALARMS> alarms(clock.getTime());
 LcdLightHandler lcdLightHandler;
 TemperatureSensor tempHandler(TEMPERATURE_PROBE_PIN);
 AudioHandler audioHandler(AUDIO_PIN);
@@ -58,4 +58,5 @@ void setCurrentDate(const Date& d){
 void setCurrentTime(const Time& t){
 	clock.setTime(t);
 	autoSaveDateRoutine();
+	alarms.updateAlarmTimers();
 }

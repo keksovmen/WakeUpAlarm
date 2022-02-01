@@ -4,7 +4,11 @@
 #include "State.hpp"
 #include "EepromPositions.h"
 
-
+template<uint8_t N>
+AlarmsHandler<N>::AlarmsHandler(const Time& currentTime) : 
+	currentTime(currentTime)
+{
+}
 
 template<uint8_t N>
 void AlarmsHandler<N>::init(){
@@ -57,7 +61,7 @@ void AlarmsHandler<N>::activateAlarm(uint8_t alarmId){
 	if(alarmId >= N){
 		return;
 	}
-	int32_t diff = alarmsTimes[alarmId].diff(clock.getTime());
+	int32_t diff = alarmsTimes[alarmId].diff(currentTime);
 	if (diff <= 0){
 		diff = diff + SECONDS_IN_DAY;
 	}
@@ -148,4 +152,13 @@ void AlarmsHandler<N>::setAudioDelay(uint16_t delayS){
 template<uint8_t N>
 const uint16_t& AlarmsHandler<N>::getAudioDelay() const{
 	return audioDelayS;
+}
+
+template<uint8_t N>
+void AlarmsHandler<N>::updateAlarmTimers(){
+	for (uint8_t i = 0; i < N; i++){
+		if(isAlarmActivated(i)){
+			activateAlarm(i);
+		}
+	}
 }
