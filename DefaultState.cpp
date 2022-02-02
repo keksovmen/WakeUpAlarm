@@ -8,7 +8,6 @@
 DefaultState::DefaultState(){
 	lcd.cursor_off();
 	lcd.clear();
-	displayTask.startTimer(0);
 }
 
 void DefaultState::actOnEvents(){

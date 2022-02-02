@@ -35,7 +35,6 @@
 #define TASK_VECTOR taskVector
 
 #define diodTask TASK_VECTOR[DIOD_TASK]
-#define displayTask TASK_VECTOR[DISPLAY_TASK]
 
 //lcd specific
 #define LCD_I2C_ADDRESS 0x27
@@ -60,8 +59,6 @@ void initProgramState();
 
 //task routines 
 void diodRoutine();
-void displayRoutine();
-void autoSaveDateRoutine();
 
 
 

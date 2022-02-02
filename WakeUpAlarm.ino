@@ -30,7 +30,6 @@ void setup(void){
 	initRealTimeTimer();
 	
 	// diodTask.startTimer(0);
-	displayTask.startTimer(0);
 }
 
 void loop(void){
@@ -50,6 +49,7 @@ void loop(void){
 		getState()->handleEvent(event);
 	}
 	audioHandler.doActions();
+	getState()->actOnEvents();
 }
 
 

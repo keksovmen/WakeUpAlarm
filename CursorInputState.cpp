@@ -4,7 +4,6 @@
 
 
 CursorInputState::CursorInputState(){
-	displayTask.disable();
 }
 
 void CursorInputState::handleEvent(const ButtonEvent& event){

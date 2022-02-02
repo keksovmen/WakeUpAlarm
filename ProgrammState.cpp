@@ -1,4 +1,3 @@
-#include <EEPROM.h>
 #include "ProgrammState.hpp"
 #include "EepromPositions.h"
 
@@ -11,8 +10,7 @@ LiquidCrystal_I2C lcd(LCD_I2C_ADDRESS,
 EepromClock clock(DATE_ADDRESS);
 ThresholdButtonsControl<BUTTONS_COUNT> buttons(THRESHOLD);
 Task TASK_VECTOR[TASK_VECTOR_SIZE] = {
-							Task(diodRoutine),
-							Task(displayRoutine)
+							Task(diodRoutine)
 							};
 AlarmsHandler<TOTAL_ALARMS> alarms(clock.getTime());
 LcdLightHandler lcdLightHandler;

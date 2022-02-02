@@ -10,8 +10,3 @@ void diodRoutine(){
 	output = !output;
 	diodTask.startTimer(1);
 }
-
-void displayRoutine(){
-	printHomePage(clock);
-	displayTask.startTimer(1);
-}
