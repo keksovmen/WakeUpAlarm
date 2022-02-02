@@ -104,7 +104,7 @@ class Clock : public TimeConsumer{
 		// bool operator< (const Cloc& l, const Clock& r);
 		bool operator<= (const Clock& v);
 		
-		void incrementSecond();
+		virtual void incrementSecond();
 		virtual void incrementDay();
 
 		int32_t diff(const Clock& clk) const;

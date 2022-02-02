@@ -49,10 +49,6 @@ void loop(void){
 		lcdLightHandler.handleEvent(event);
 		getState()->handleEvent(event);
 	}
-	if (clock.eventReady()){
-		clock.consumeEvent();
-		alarms.updateAlarmTimers();
-	}
 	audioHandler.doActions();
 }
 

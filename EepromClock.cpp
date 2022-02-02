@@ -8,6 +8,11 @@ EepromClock::EepromClock(int dateAddress) :
 {
 }
 
+void EepromClock::incrementSecond(){
+	Clock::incrementSecond();
+	generateEvent();
+}
+
 void EepromClock::incrementDay(){
 	Clock::incrementDay();
 	saveDate(dateAddress);
@@ -15,8 +20,6 @@ void EepromClock::incrementDay(){
 
 void EepromClock::setTime(const Time& t){
 	Clock::setTime(t);
-	//recalculate alarms through checking event status
-	generateEvent();
 }
 
 void EepromClock::setDate(const Date& d){
