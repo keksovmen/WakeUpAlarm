@@ -68,7 +68,7 @@ void setAudioDelay(const int32_t& s){
 
 
 MenuInputState::MenuInputState(){
-	lcdShowInput();
+	printOnDisplay();
 }
 
 void MenuInputState::handleEvent(const ButtonEvent& event){
@@ -126,7 +126,7 @@ void MenuInputState::handleEvent(const ButtonEvent& event){
 				return;
 		}
 	}
-	lcdShowInput();
+	printOnDisplay();
 }
 
 int8_t MenuInputState::maxCursorPosition() const {
@@ -134,7 +134,7 @@ int8_t MenuInputState::maxCursorPosition() const {
 }
 
 
-void MenuInputState::lcdShowInput() const {
+void MenuInputState::printOnDisplay() const {
 	char buffer[17];
 	const uint8_t menuIndex = cursorPosition < ALARMS_MENUS_OFFSET ?
 							cursorPosition : ALARMS_MENUS_OFFSET;

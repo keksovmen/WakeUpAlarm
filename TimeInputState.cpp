@@ -7,7 +7,7 @@ TimeInputState::TimeInputState(void (*consumer)(const Time& t),
 								const Time& initialValue)
 	: InputState<Time>(consumer, initialValue)
 {
-	lcdShowInput();
+	printOnDisplay();
 }
 
 int32_t TimeInputState::getChange(const ButtonEvent& event) const{
@@ -53,7 +53,7 @@ bool TimeInputState::validateInput() {
 	return true;
 }
 
-void TimeInputState::lcdShowInput() const {
+void TimeInputState::printOnDisplay() const {
 	lcd.setCursor(0, INPUT_ROW_NUMBER);
 	displayTime(m_val, true);
 	uint8_t cursorAt = cursorPosition;

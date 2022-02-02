@@ -11,6 +11,18 @@ DefaultState::DefaultState(){
 	displayTask.startTimer(0);
 }
 
+void DefaultState::actOnEvents(){
+	if (clock.eventReady()){
+		clock.consumeEvent();
+		printHomePage(clock);
+	}
+	//add temperature probe event when result is ready
+}
+
+void DefaultState::printOnDisplay() const{
+	printHomePage(clock);
+}
+
 
 void DefaultState::handleEvent(const ButtonEvent& event){
 	if (event.holdMs >= 1000){

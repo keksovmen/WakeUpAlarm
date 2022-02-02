@@ -12,7 +12,7 @@ IntInputState::IntInputState(void (*consumer)(const int32_t& val),
 		minVal(minVal), maxVal(maxVal),
 		digitsToRepresent(findLongLength(maxVal))
 {
-	lcdShowInput();
+	printOnDisplay();
 }
 
 int32_t IntInputState::getChange(const ButtonEvent& event) const{
@@ -39,7 +39,7 @@ bool IntInputState::validateInput() {
 	return minVal <= m_val && m_val <= maxVal;
 }
 
-void IntInputState::lcdShowInput() const {
+void IntInputState::printOnDisplay() const {
 	// lcd.clear();
 	lcd.setCursor(0, INPUT_ROW_NUMBER);
 	printZeroPaddedIntClearRight(m_val, digitsToRepresent);

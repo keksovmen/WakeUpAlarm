@@ -7,7 +7,7 @@ DateInputState::DateInputState(void (*consumer)(const Date& val),
 								const Date& initialValue)
 	: InputState<Date>(consumer, initialValue)
 {
-	lcdShowInput();
+	printOnDisplay();
 }
 
 int32_t DateInputState::getChange(const ButtonEvent& event) const{
@@ -65,7 +65,7 @@ bool DateInputState::validateInput() {
 	return true;
 }
 
-void DateInputState::lcdShowInput() const {
+void DateInputState::printOnDisplay() const {
 	lcd.setCursor(0, INPUT_ROW_NUMBER);
 	displayDate(m_val);
 	uint8_t cursorAt = cursorPosition;

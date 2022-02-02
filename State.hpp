@@ -26,6 +26,9 @@ class StateFactory;
 
 
 class State : public EventHandler<ButtonEvent>{
+	public:
+		virtual void actOnEvents();
+		virtual void printOnDisplay() const;
 	protected:
 		bool isCancelEvent(const ButtonEvent& event);
 		bool isAcceptEvent(const ButtonEvent& event);
@@ -35,6 +38,8 @@ class State : public EventHandler<ButtonEvent>{
 class DefaultState : public State{
 	public:
 		DefaultState();
+		virtual void actOnEvents() override;
+		virtual void printOnDisplay() const override;
 		
 		void handleEvent(const ButtonEvent& event) override;
 };
@@ -52,7 +57,7 @@ class CursorInputState : public State{
 		//ideal to call in constructor but doesn't work
 		//https://stackoverflow.com/questions/962132/calling-virtual-functions-inside-constructors
 		//be sure to call in children constructor
-		virtual void lcdShowInput() const = 0;
+		// virtual void printOnDisplay() const = 0;
 		
 	private:
 		void moveCursor(const ButtonEvent& event);
@@ -65,9 +70,9 @@ class MenuInputState : public CursorInputState{
 	public:
 		MenuInputState();
 		void handleEvent(const ButtonEvent& event) override;
+		void printOnDisplay() const override;
 	protected:
 		int8_t maxCursorPosition() const override;
-		void lcdShowInput() const override;
 };
 
 
@@ -94,13 +99,14 @@ class TimeInputState : public InputState<Time>{
 	public:
 		TimeInputState(void (*consumer)(const Time& val),
 						const Time& initialValue);
-	
+		void printOnDisplay() const override;
+		
 	protected:
 		int32_t getChange(const ButtonEvent& event) const override;
 		int8_t maxCursorPosition() const override;
 		void applyChange(int32_t change, int8_t cursorPosition) override;
 		bool validateInput() override;
-		void lcdShowInput() const override;
+		
 };
 
 
@@ -108,12 +114,13 @@ class DateInputState : public InputState<Date>{
 	public:
 		DateInputState(void (*consumer)(const Date& val),
 						const Date& initialValue);
+		void printOnDisplay() const override;
+		
 	protected:
 		int32_t getChange(const ButtonEvent& event) const override;
 		int8_t maxCursorPosition() const override;
 		void applyChange(int32_t change, int8_t cursorPosition) override;
 		bool validateInput() override;
-		void lcdShowInput() const override;
 };
 
 
@@ -125,6 +132,8 @@ class IntInputState : public InputState<int32_t>{
 						int32_t minVal, 
 						int32_t maxVal
 						);
+		void printOnDisplay() const override;
+		
 	protected:
 		const int32_t minVal;
 		const int32_t maxVal;
@@ -134,13 +143,13 @@ class IntInputState : public InputState<int32_t>{
 		int8_t maxCursorPosition() const override;
 		void applyChange(int32_t change, int8_t cursorPosition) override;
 		bool validateInput() override;
-		void lcdShowInput() const override;
 };
 
 
-class AlarmState : public State{
+class AlarmState : public DefaultState{
 	public:
 		AlarmState(uint8_t alarmId);
+		void actOnEvents() override;
 		void handleEvent(const ButtonEvent& event) override;
 	protected:
 		const uint8_t alarmId;

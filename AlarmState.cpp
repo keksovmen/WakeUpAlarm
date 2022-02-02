@@ -7,9 +7,10 @@ AlarmState::AlarmState(uint8_t alarmId)
 	: alarmId(alarmId)
 {
 	digitalWrite(ALARM_RELE_PIN, HIGH);
-	lcd.cursor_off();
-	lcd.clear();
-	displayTask.startTimer(0);
+}
+
+void AlarmState::actOnEvents(){
+	//do nothing
 }
 
 void AlarmState::handleEvent(const ButtonEvent& event){

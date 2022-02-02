@@ -27,5 +27,5 @@ void InputState<T>::handleEvent(const ButtonEvent& event){
 	if (!validateInput()){
 		applyChange(-change, cursorPosition);
 	}
-	lcdShowInput();
+	printOnDisplay();
 }
