@@ -1,2 +1,3 @@
 Add another display screen, where time until alarm is drawn
 Create temperature log for last n hours to check the dynamic
+Refactor ProgrammState.hpp into Globals.hpp, made classes more independent of globals

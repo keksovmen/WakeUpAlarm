@@ -8,13 +8,14 @@
 #include <DallasTemperature.h>
 #include "TimeConsumer.hpp"
 #include "Timer.hpp"
+#include "ConsumableEvent.hpp"
 
 #define MIN_TEMPERATURE_PERIOD 1
 #define MAX_TEMPERATURE_PERIOD 240
 #define DEFAULT_TEMPERATURE_PERIOD 60
 
 
-class TemperatureSensor : public TimeConsumer
+class TemperatureSensor : public TimeConsumer, public ConsumableEvent
 {
 	public:
 		TemperatureSensor(int sensorPin){

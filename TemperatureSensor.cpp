@@ -50,5 +50,6 @@ void TemperatureSensor::askTemp(){
 
 void TemperatureSensor::setTemp(){
 	temperature = sensor.getTempCByIndex(0);
+	generateEvent();
 	timer.startTimer(askPeriod);
 }

@@ -15,7 +15,10 @@ void DefaultState::actOnEvents(){
 		clock.consumeEvent();
 		printHomePage(clock);
 	}
-	//add temperature probe event when result is ready
+	if (tempHandler.eventReady()){
+		tempHandler.consumeEvent();
+		printHomePage(clock);
+	}
 }
 
 void DefaultState::printOnDisplay() const{
