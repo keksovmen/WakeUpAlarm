@@ -26,12 +26,12 @@ static uint8_t selectedAlarmId = 0;
 
 
 void setTime(const Time& t){
-	setCurrentTime(t);
+	clock.setTime(t);
 	setState(StateFactory::createDefaultState());
 }
 
 void setDate(const Date& d){
-	setCurrentDate(d);
+	clock.setDate(d);
 	// DEBUG
 	Serial.print("Current day ");
 	Serial.println(clock.getDate().currentDay);

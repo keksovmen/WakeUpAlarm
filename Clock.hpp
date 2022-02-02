@@ -105,15 +105,15 @@ class Clock : public TimeConsumer{
 		bool operator<= (const Clock& v);
 		
 		void incrementSecond();
-		void incrementDay();
+		virtual void incrementDay();
 
 		int32_t diff(const Clock& clk) const;
 		
 		const Time& getTime()const {return time;}
 		const Date& getDate()const {return date;}
 		
-		void setTime(const Time& t){this->time = t;};
-		void setDate(const Date& d){this->date = d;};
+		virtual void setTime(const Time& t){this->time = t;};
+		virtual void setDate(const Date& d){this->date = d;};
 
 		
 	private:

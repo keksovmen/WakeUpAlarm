@@ -8,12 +8,11 @@ LiquidCrystal_I2C lcd(LCD_I2C_ADDRESS,
 						LCD_TOTAL_COLUMNS,
 						LCD_TOTAL_ROWS);
 
-Clock clock;
+EepromClock clock(DATE_ADDRESS);
 ThresholdButtonsControl<BUTTONS_COUNT> buttons(THRESHOLD);
 Task TASK_VECTOR[TASK_VECTOR_SIZE] = {
 							Task(diodRoutine),
-							Task(displayRoutine),
-							Task(autoSaveDateRoutine)
+							Task(displayRoutine)
 							};
 AlarmsHandler<TOTAL_ALARMS> alarms(clock.getTime());
 LcdLightHandler lcdLightHandler;
@@ -31,7 +30,7 @@ static Date readDateFromEEPROM(){
 
 
 void initProgramState(){
-	clock.setDate(readDateFromEEPROM());
+	// clock.setDate(readDateFromEEPROM());
 	alarms.init();
 	lcdLightHandler.init();
 	tempHandler.init();
@@ -46,13 +45,13 @@ State* getState(){
 	return state;
 }
 
-void setCurrentDate(const Date& d){
-	clock.setDate(d);
-	autoSaveDateRoutine();
-}
+// void setCurrentDate(const Date& d){
+	// clock.setDate(d);
+	// autoSaveDateRoutine();
+// }
 
-void setCurrentTime(const Time& t){
-	clock.setTime(t);
-	autoSaveDateRoutine();
-	alarms.updateAlarmTimers();
-}
+// void setCurrentTime(const Time& t){
+	// clock.setTime(t);
+	// autoSaveDateRoutine();
+	// alarms.updateAlarmTimers();
+// }

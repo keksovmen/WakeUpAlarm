@@ -31,7 +31,6 @@ void setup(void){
 	
 	// diodTask.startTimer(0);
 	displayTask.startTimer(0);
-	dateAutoSaveTask.startTimer(0);
 }
 
 void loop(void){
@@ -49,6 +48,10 @@ void loop(void){
 		
 		lcdLightHandler.handleEvent(event);
 		getState()->handleEvent(event);
+	}
+	if (clock.eventReady()){
+		clock.consumeEvent();
+		alarms.updateAlarmTimers();
 	}
 	audioHandler.doActions();
 }

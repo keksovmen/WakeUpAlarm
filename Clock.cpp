@@ -189,7 +189,7 @@ bool Clock::operator<= (const Clock& v){
 
 void Clock::incrementSecond(){
 	if (time.addSecond()){
-		date.addDay();
+		incrementDay();
 	}
 }
 

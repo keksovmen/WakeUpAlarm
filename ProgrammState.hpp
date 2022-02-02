@@ -5,7 +5,7 @@
 #include <stdint.h>
 #include <LiquidCrystal_I2C.h>
 
-#include "Clock.hpp"
+#include "EepromClock.hpp"
 #include "Task.hpp"
 #include "TaskVector.hpp"
 #include "ButtonsControl.hpp"
@@ -36,7 +36,6 @@
 
 #define diodTask TASK_VECTOR[DIOD_TASK]
 #define displayTask TASK_VECTOR[DISPLAY_TASK]
-#define dateAutoSaveTask TASK_VECTOR[DATE_AUTO_SAVE]
 
 //lcd specific
 #define LCD_I2C_ADDRESS 0x27
@@ -45,7 +44,7 @@
 
 extern LiquidCrystal_I2C lcd;
 
-extern Clock clock;
+extern EepromClock clock;
 extern ThresholdButtonsControl<BUTTONS_COUNT> buttons;
 extern Task TASK_VECTOR[TASK_VECTOR_SIZE];
 extern AlarmsHandler<TOTAL_ALARMS> alarms;
@@ -78,9 +77,5 @@ void initInputButtons();
 //state explicit calls for easing tracking
 void setState(State* s);
 State* getState();
-
-//for writing to EEPROM
-void setCurrentDate(const Date& d);
-void setCurrentTime(const Time& t);
 
 #endif

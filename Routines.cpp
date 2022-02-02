@@ -16,11 +16,3 @@ void displayRoutine(){
 	printHomePage(clock);
 	displayTask.startTimer(1);
 }
-
-void autoSaveDateRoutine(){
-	EEPROM.put(DATE_ADDRESS, clock.getDate());
-	Clock tmp;
-	tmp.setDate(clock.getDate());
-	tmp.incrementDay();
-	dateAutoSaveTask.startTimer(tmp.diff(clock));
-}
