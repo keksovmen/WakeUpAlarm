@@ -22,6 +22,19 @@ static void printActiveAlarms(){
 	}
 }
 
+static void printTemperatureTopRight(float temp){
+	const int BEGINING = 10;
+	lcd.setCursor(BEGINING, 0);
+	int8_t totalLength = 3 + findLongLength(temp);
+	if (temp < 0){
+		totalLength++;
+	}
+	printTemperature(temp);
+	for (int i = totalLength + BEGINING; i < LCD_TOTAL_COLUMNS; i++){
+		lcd.print(" ");
+	}
+}
+
 
 
 char intToAscii(int8_t digit){
@@ -53,15 +66,13 @@ void displayDateTime(const Clock& clk){
 	displayDate(clk.getDate());
 }
 
-void printHomePage(bool clear){
+void printHomePage(const Clock& clk, bool clear){
 	if (clear){
 		lcd.clear();
 	}
-	displayDateTime(clock);
+	displayDateTime(clk);
 	printActiveAlarms();
-	lcd.setCursor(10, 0);
-	lcd.print(tempHandler.getTemperature());
-	lcd.print('C');
+	printTemperatureTopRight(tempHandler.getTemperature());
 }
 
 void printZeroPaddedInt(int32_t val, int8_t totalSymbols){
@@ -89,4 +100,9 @@ void printZeroPaddedInt(int32_t val, int8_t totalSymbols){
 void printZeroPaddedIntClearRight(int32_t val, int8_t totalSymbols){
 	printZeroPaddedInt(val, totalSymbols);
 	lcd.print(' ');
+}
+
+void printTemperature(float temp){
+	lcd.print(temp, 2);
+	lcd.print('C');
 }

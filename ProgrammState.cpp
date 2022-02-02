@@ -2,10 +2,6 @@
 #include "ProgrammState.hpp"
 #include "EepromPositions.h"
 
-#define LCD_I2C_ADDRESS 0x27
-#define LCD_TOTAL_COLUMNS 16
-#define LCD_TOTAL_ROWS 2
-
 
 
 LiquidCrystal_I2C lcd(LCD_I2C_ADDRESS,

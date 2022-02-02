@@ -13,7 +13,7 @@ void diodRoutine(){
 }
 
 void displayRoutine(){
-	printHomePage();
+	printHomePage(clock);
 	displayTask.startTimer(1);
 }
 

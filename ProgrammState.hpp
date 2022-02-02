@@ -38,6 +38,10 @@
 #define displayTask TASK_VECTOR[DISPLAY_TASK]
 #define dateAutoSaveTask TASK_VECTOR[DATE_AUTO_SAVE]
 
+//lcd specific
+#define LCD_I2C_ADDRESS 0x27
+#define LCD_TOTAL_COLUMNS 16
+#define LCD_TOTAL_ROWS 2
 
 extern LiquidCrystal_I2C lcd;
 

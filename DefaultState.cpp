@@ -17,7 +17,7 @@ void DefaultState::handleEvent(const ButtonEvent& event){
 		switch(event.buttonIndex){
 			case 0:
 				alarms.flipAlarm((event.holdMs / 1000) - 1);
-				printHomePage();
+				printHomePage(clock);
 				break;
 			case 1:
 				lcdLightHandler.enableBackLight();
