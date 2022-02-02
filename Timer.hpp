@@ -6,7 +6,7 @@
 #include "ConsumableEvent.hpp"
 #include "TimeConsumer.hpp"
 
-
+//Will generate event with default code, when remainingDelay <= 0
 class Timer : public ConsumableEvent, public TimeConsumer{
 	public:
 		virtual void consumeTime(int32_t deltaTime) override;

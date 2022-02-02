@@ -3,13 +3,18 @@
 
 #include <stdbool.h>
 
+
+
 class ConsumableEvent{
 	public:
-		void consumeEvent(){eventFlag = false;}
-		virtual void generateEvent(){eventFlag = true;}
-		bool eventReady() const{return eventFlag;}
+		void consumeEvent(){eventId = 0;}
+		virtual void generateEvent(int eventId=1){eventId = eventId;}
+		bool eventReady() const {return eventId == 0;}
+		int getEventId() const {return eventId;}
 	private:
-		bool eventFlag = false;
+		//default 0 implicit conversion to bool will give false
+		//threat as no event exists
+		int eventId = 0;
 };
 
 #endif

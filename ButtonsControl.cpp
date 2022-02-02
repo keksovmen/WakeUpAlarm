@@ -81,9 +81,9 @@ ThresholdButtonsControl<N>::ThresholdButtonsControl(uint16_t minHoldMs) :
 }
 
 template<uint8_t N>
-void ThresholdButtonsControl<N>::generateEvent(){
+void ThresholdButtonsControl<N>::generateEvent(int eventId){
 	if (this->button.holdMs > minHoldDurationMs){
-		ButtonsControl<N>::generateEvent();
+		ButtonsControl<N>::generateEvent(eventId);
 	}
 }
 

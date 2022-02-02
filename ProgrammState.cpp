@@ -21,16 +21,9 @@ AudioHandler audioHandler(AUDIO_PIN);
 State* state = nullptr;
 
 
-static Date readDateFromEEPROM(){
-	Date d;
-	EEPROM.get(DATE_ADDRESS, d);
-	validateAndFixDate(d);
-	return d;
-}
 
 
 void initProgramState(){
-	// clock.setDate(readDateFromEEPROM());
 	alarms.init();
 	lcdLightHandler.init();
 	tempHandler.init();
@@ -45,13 +38,3 @@ State* getState(){
 	return state;
 }
 
-// void setCurrentDate(const Date& d){
-	// clock.setDate(d);
-	// autoSaveDateRoutine();
-// }
-
-// void setCurrentTime(const Time& t){
-	// clock.setTime(t);
-	// autoSaveDateRoutine();
-	// alarms.updateAlarmTimers();
-// }

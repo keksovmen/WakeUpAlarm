@@ -37,7 +37,7 @@ class ThresholdButtonsControl : public ButtonsControl<N>
 {
 	public:
 		ThresholdButtonsControl(uint16_t minHoldMs);
-		void generateEvent() override;
+		void generateEvent(int eventId=1) override;
 		
 	private:
 		const uint16_t minHoldDurationMs;
