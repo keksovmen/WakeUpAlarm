@@ -50,9 +50,6 @@ void initProgramState();
 //task routines 
 void diodRoutine();
 
-//buttons functionality
-void initInputButtons();
-
 
 //state explicit calls for easing tracking
 void setState(State* s);

@@ -8,8 +8,10 @@
 #include "LcdPrintFunctions.hpp"
 #include "PinOUT.h"
 #include "RTC.h"
+#include "ButtonsInput.h"
 
 
+void buttonsHook(int8_t key);
 
 
 void setup(void){
@@ -27,7 +29,7 @@ void setup(void){
 	
 	
 	initProgramState();
-	initInputButtons();
+	initInputButtons(buttonsHook);
 	initRealTimeClock(PRESCALAR_1024, 1.0);
 	
 	// diodTask.startTimer(0);
@@ -89,5 +91,13 @@ void printClock(){
 	Serial.print(clock.getDate().year);
 	Serial.print(" ");
 	Serial.println(clock.getDate().currentDay);
+}
+
+void buttonsHook(int8_t key){
+	if (key == -1){
+		buttons.deactivateAll();
+	}else{
+		buttons.activate(key);
+	}
 }
 
