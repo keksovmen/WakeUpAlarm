@@ -16,11 +16,6 @@
 #include "AudioHandler.hpp"
 
 
-#define TIMER1_DIVIDER 1024
-#define TIMER1_DIVIDER_REGISTER_VAL 0x05
-#define TICKS_1S F_CPU / TIMER1_DIVIDER
-
-
 //total buttons to allocate space
 #define BUTTONS_COUNT 4
 //what hold duration is minimal to accept in millis
@@ -54,13 +49,6 @@ void initProgramState();
 
 //task routines 
 void diodRoutine();
-
-
-
-//1 sec timer1 functional
-void initRealTimeTimer();
-uint8_t getDeltaTime();
-bool isSecondPast();
 
 //buttons functionality
 void initInputButtons();

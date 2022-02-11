@@ -7,6 +7,7 @@
 #include "State.hpp"
 #include "LcdPrintFunctions.hpp"
 #include "PinOUT.h"
+#include "RTC.h"
 
 
 
@@ -27,13 +28,13 @@ void setup(void){
 	
 	initProgramState();
 	initInputButtons();
-	initRealTimeTimer();
+	initRealTimeClock(PRESCALAR_1024, 1.0);
 	
 	// diodTask.startTimer(0);
 }
 
 void loop(void){
-	if (isSecondPast()){
+	if (isTimePast()){
 		uint8_t deltaTime = getDeltaTime();
 		tasksLoop(deltaTime);
 	}
