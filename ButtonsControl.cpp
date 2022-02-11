@@ -89,6 +89,7 @@ void ThresholdButtonsControl<N>::generateEvent(int eventId){
 
 
 //------------------------------------
+//TODO remove from here in to separate control unit
 
 static void enableClock(void){
 	cli();

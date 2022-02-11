@@ -1,8 +1,8 @@
 #ifndef TASK_H
 #define TASK_H
 
-// #include <stdbool.h>
-// #include <stdint.h>
+#include <stdint.h>
+
 #include "Timer.hpp"
 
 class Task : public Timer{

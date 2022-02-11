@@ -49,18 +49,16 @@ void setup(void){
 	initComponents();
 	initInputButtons(buttonsHook);
 	initRealTimeClock(PRESCALAR_1024, 1.0);
-	
-	// diodTask.startTimer(0);
 }
 
 void loop(void){
 	if (isTimePast()){
-		uint8_t deltaTime = getDeltaTime();
-		tasksLoop(deltaTime);
+		tasksLoop(getDeltaTime());
 	}
 	if (buttons.eventReady()){
 		ButtonEvent event = buttons.getEvent();
 		buttons.consumeEvent();
+		//DEBUG
 		Serial.print("Last button index ");
 		Serial.print(event.buttonIndex);
 		Serial.print(", duration in milliseconds ");
@@ -81,31 +79,6 @@ void tasksLoop(uint8_t secondsPast){
 	tempHandler.consumeTime(secondsPast);
 }
 
-// void wait(unsigned int ticksCount){
-	// cli();
-	// TCNT1 = 0x0000;
-	// ticks = 0;
-	// sei();
-	// while(ticks < ticksCount){
-		// ;
-	// }	
-// }
-
-void printClock(){
-	Serial.print(clock.getTime().hours);
-	Serial.print(":");
-	Serial.print(clock.getTime().minutes);
-	Serial.print(":");
-	Serial.print(clock.getTime().seconds);
-	Serial.print(" ");
-	Serial.print(clock.getDate().day);
-	Serial.print(".");
-	Serial.print(clock.getDate().month);
-	Serial.print(".");
-	Serial.print(clock.getDate().year);
-	Serial.print(" ");
-	Serial.println(clock.getDate().currentDay);
-}
 
 void buttonsHook(int8_t key){
 	if (key == -1){
