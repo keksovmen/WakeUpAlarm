@@ -1,6 +1,6 @@
 #include "State.hpp"
 #include "LcdPrintFunctions.hpp"
-#include "ProgrammState.hpp"
+#include "Globals.hpp"
 
 
 DateInputState::DateInputState(void (*consumer)(const Date& val),

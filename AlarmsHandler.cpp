@@ -1,6 +1,6 @@
 #include <EEPROM.h>
 #include "AlarmsHandler.hpp"
-#include "ProgrammState.hpp"
+#include "Globals.hpp"
 #include "State.hpp"
 #include "EepromPositions.h"
 

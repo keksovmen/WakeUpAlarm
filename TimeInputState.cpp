@@ -1,6 +1,6 @@
 #include "State.hpp"
 #include "LcdPrintFunctions.hpp"
-#include "ProgrammState.hpp"
+#include "Globals.hpp"
 
 
 TimeInputState::TimeInputState(void (*consumer)(const Time& t),

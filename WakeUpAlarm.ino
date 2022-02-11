@@ -1,17 +1,35 @@
 #include <Arduino.h>
-#include <avr/interrupt.h>
-#include <avr/io.h>
 
 
-#include "ProgrammState.hpp"
-#include "State.hpp"
+#include "Globals.hpp"
+#include "EepromPositions.h"
 #include "LcdPrintFunctions.hpp"
 #include "PinOUT.h"
 #include "RTC.h"
 #include "ButtonsInput.h"
 
 
+
+LiquidCrystal_I2C lcd(LCD_I2C_ADDRESS,
+						LCD_TOTAL_COLUMNS,
+						LCD_TOTAL_ROWS);
+
+EepromClock clock(DATE_ADDRESS);
+//what hold duration is minimal to accept in millis
+#define THRESHOLD 50u
+ThresholdButtonsControl<BUTTONS_COUNT> buttons(THRESHOLD);
+AlarmsHandler<TOTAL_ALARMS> alarms(clock.getTime());
+LcdLightHandler lcdLightHandler;
+TemperatureSensor tempHandler(TEMPERATURE_PROBE_PIN);
+AudioHandler audioHandler(AUDIO_PIN);
+State* state = nullptr;
+
+
+//hooks
 void buttonsHook(int8_t key);
+
+
+void initComponents();
 
 
 void setup(void){
@@ -28,7 +46,7 @@ void setup(void){
 	//DEBUG
 	
 	
-	initProgramState();
+	initComponents();
 	initInputButtons(buttonsHook);
 	initRealTimeClock(PRESCALAR_1024, 1.0);
 	
@@ -58,10 +76,6 @@ void loop(void){
 
 void tasksLoop(uint8_t secondsPast){
 	clock.consumeTime(secondsPast);
-	
-	for (int i = 0; i < TASK_VECTOR_SIZE; i++){
-		taskVector[i].consumeTime(secondsPast);
-	}
 	alarms.consumeTime(secondsPast);
 	lcdLightHandler.consumeTime(secondsPast);
 	tempHandler.consumeTime(secondsPast);
@@ -99,5 +113,22 @@ void buttonsHook(int8_t key){
 	}else{
 		buttons.activate(key);
 	}
+}
+
+void initComponents(){
+	alarms.init();
+	lcdLightHandler.init();
+	tempHandler.init();
+	setState(StateFactory::createDefaultState());
+}
+
+
+//---------------------------Globals---------------------------------------
+void setState(State* s){
+	state = s;
+}
+
+State* getState(){
+	return state;
 }
 

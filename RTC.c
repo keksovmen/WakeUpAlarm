@@ -13,6 +13,7 @@ static uint16_t getPrescalarValue(enum Prescalars prescalar){
 		case PRESCALAR_64: return 64;
 		case PRESCALAR_256: return 256;
 		case PRESCALAR_1024: return 1024;
+		default: return 1;
 	}
 }
 

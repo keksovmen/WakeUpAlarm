@@ -1,7 +1,7 @@
 #include <avr/pgmspace.h>
 #include "State.hpp"
 #include "LcdPrintFunctions.hpp"
-#include "ProgrammState.hpp"
+#include "Globals.hpp"
 #include "Util.hpp"
 
 

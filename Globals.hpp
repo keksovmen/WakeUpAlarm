@@ -1,8 +1,6 @@
-#ifndef PROGRAMM_STATE_H
-#define PROGRAMM_STATE_H
+#ifndef GLOBALS_H
+#define GLOBALS_H
 
-#include <Arduino.h>
-#include <stdint.h>
 #include <LiquidCrystal_I2C.h>
 
 #include "EepromClock.hpp"
@@ -16,15 +14,6 @@
 #include "AudioHandler.hpp"
 
 
-//total buttons to allocate space
-#define BUTTONS_COUNT 4
-//what hold duration is minimal to accept in millis
-#define THRESHOLD 50u
-
-//task declarations
-#define TASK_VECTOR taskVector
-
-#define diodTask TASK_VECTOR[DIOD_TASK]
 
 //lcd specific
 #define LCD_I2C_ADDRESS 0x27
@@ -34,21 +23,17 @@
 extern LiquidCrystal_I2C lcd;
 
 extern EepromClock clock;
+
+//total buttons to allocate space
+#define BUTTONS_COUNT 4
 extern ThresholdButtonsControl<BUTTONS_COUNT> buttons;
-extern Task TASK_VECTOR[TASK_VECTOR_SIZE];
+
+// #define TOTAL_ALARMS 3
 extern AlarmsHandler<TOTAL_ALARMS> alarms;
 extern LcdLightHandler lcdLightHandler;
 extern TemperatureSensor tempHandler;
 extern AudioHandler audioHandler;
 extern State* state;
-
-
-
-//init extern fields
-void initProgramState();
-
-//task routines 
-void diodRoutine();
 
 
 //state explicit calls for easing tracking

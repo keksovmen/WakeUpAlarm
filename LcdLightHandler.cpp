@@ -1,6 +1,6 @@
 #include <EEPROM.h>
 #include "LcdLightHandler.hpp"
-#include "ProgrammState.hpp"
+#include "Globals.hpp"
 #include "EepromPositions.h"
 
 
