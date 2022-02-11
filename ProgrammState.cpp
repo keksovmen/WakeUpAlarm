@@ -1,6 +1,6 @@
 #include "ProgrammState.hpp"
 #include "EepromPositions.h"
-
+#include "PinOUT.h"
 
 
 LiquidCrystal_I2C lcd(LCD_I2C_ADDRESS,

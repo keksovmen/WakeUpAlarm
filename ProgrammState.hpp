@@ -20,11 +20,6 @@
 #define TIMER1_DIVIDER_REGISTER_VAL 0x05
 #define TICKS_1S F_CPU / TIMER1_DIVIDER
 
-//pin out
-#define DIOD_BLINK_PIN 13
-#define ALARM_RELE_PIN 8
-#define TEMPERATURE_PROBE_PIN 10
-#define AUDIO_PIN 9
 
 //total buttons to allocate space
 #define BUTTONS_COUNT 4

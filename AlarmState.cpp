@@ -1,6 +1,7 @@
 #include "State.hpp"
 #include "LcdPrintFunctions.hpp"
 #include "ProgrammState.hpp"
+#include "PinOUT.h"
 
 
 AlarmState::AlarmState(uint8_t alarmId)
