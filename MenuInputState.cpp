@@ -6,7 +6,7 @@
 
 
 
-#define ALARMS_MENUS_OFFSET 6
+#define ALARMS_MENUS_OFFSET 7
 
 
 //remember current lcd has 16 symbols on the line
@@ -16,12 +16,13 @@ static const char s2[] PROGMEM = "Set backlight";
 static const char s3[] PROGMEM = "Set off period";
 static const char s4[] PROGMEM = "Set temp period";
 static const char s5[] PROGMEM = "Set audio delay";
-static const char s6[] PROGMEM = "Set alarm time ";
+static const char s6[] PROGMEM = "Add sec in mins";
+static const char s7[] PROGMEM = "Set alarm time ";
 
-static PGM_P const MENUS[] PROGMEM = {s0, s1, s2, s3, s4, s5, s6};
+static PGM_P const MENUS[] PROGMEM = {s0, s1, s2, s3, s4, s5, s6, s7};
 
 
-//cursed but does job
+//cursed but does the job
 static uint8_t selectedAlarmId = 0;
 
 
@@ -65,6 +66,10 @@ void setAudioDelay(const int32_t& s){
 	setState(StateFactory::createDefaultState());
 }
 
+void setAddSecund(const int32_t& s){
+	additionalTime.setPeriod(s);
+	setState(StateFactory::createDefaultState());
+}
 
 
 MenuInputState::MenuInputState(){
@@ -118,6 +123,13 @@ void MenuInputState::handleEvent(const ButtonEvent& event){
 							MAX_AUDIO_DELAY,
 							alarms.getAudioDelay()));
 				return;
+			case 6:
+				setState(StateFactory::createInputIntState(
+							setAddSecund,
+							MIN_ADDITIONAL_TIME_PERIOD,
+							MAX_ADDITIONAL_TIME_PERIOD,
+							additionalTime.getPeriod()));
+				return;
 			default:	//for alarms settings
 				selectedAlarmId = cursorPosition - ALARMS_MENUS_OFFSET;
 				setState(StateFactory::createInputTimeState(
@@ -168,6 +180,10 @@ void MenuInputState::printOnDisplay() const {
 		case 5:
 			printZeroPaddedInt(alarms.getAudioDelay(),
 								findLongLength(MAX_AUDIO_DELAY - MIN_AUDIO_DELAY));
+			break;
+		case 6:
+			printZeroPaddedInt(additionalTime.getPeriod(),
+								findLongLength(MAX_ADDITIONAL_TIME_PERIOD - MIN_ADDITIONAL_TIME_PERIOD));
 			break;
 		default:
 			displayTime(alarms.getAlarmTime(cursorPosition - ALARMS_MENUS_OFFSET), true);

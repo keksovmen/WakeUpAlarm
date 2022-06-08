@@ -1,18 +1,24 @@
 #include "Task.hpp"
 
-void Task::consumeTime(int32_t deltaTimeS){
+void BaseTask::consumeTime(int32_t deltaTimeS){
 	Timer::consumeTime(deltaTimeS);
-	actIfEvent();
+	tryEvent();
 }
 
-void Task::startTimer(int32_t delayS){
+void BaseTask::startTimer(int32_t delayS){
 	Timer::startTimer(delayS);
-	actIfEvent();
+	tryEvent();
 }
+
+void BaseTask::tryEvent(){
+	if(eventReady()){
+		consumeEvent();
+		actIfEvent();
+	}
+}
+
+
 
 void Task::actIfEvent(){
-	if (eventReady()){
-		consumeEvent();
-		activity();
-	}
+	activity();
 }

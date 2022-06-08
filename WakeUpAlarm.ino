@@ -23,6 +23,7 @@ LcdLightHandler lcdLightHandler;
 TemperatureSensor tempHandler(TEMPERATURE_PROBE_PIN);
 AudioHandler audioHandler(AUDIO_PIN);
 State* state = nullptr;
+AdditionalTime additionalTime;
 
 
 //hooks
@@ -77,6 +78,7 @@ void tasksLoop(uint8_t secondsPast){
 	alarms.consumeTime(secondsPast);
 	lcdLightHandler.consumeTime(secondsPast);
 	tempHandler.consumeTime(secondsPast);
+	additionalTime.consumeTime(secondsPast);
 }
 
 
@@ -92,6 +94,7 @@ void initComponents(){
 	alarms.init();
 	lcdLightHandler.init();
 	tempHandler.init();
+	additionalTime.init();
 	setState(StateFactory::createDefaultState());
 }
 

@@ -12,6 +12,7 @@
 #include "LcdLightHandler.hpp"
 #include "TemperatureSensor.hpp"
 #include "AudioHandler.hpp"
+#include "AdditionalTime.hpp"
 
 
 
@@ -34,7 +35,7 @@ extern LcdLightHandler lcdLightHandler;
 extern TemperatureSensor tempHandler;
 extern AudioHandler audioHandler;
 extern State* state;
-
+extern AdditionalTime additionalTime;
 
 //state explicit calls for easing tracking
 void setState(State* s);
