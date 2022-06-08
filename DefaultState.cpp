@@ -41,6 +41,7 @@ void DefaultState::handleEvent(const ButtonEvent& event){
 				break;
 			case 3:
 				tempHandler.forceMeasure();
+				lcd.init();
 				break;
 		}
 	}
